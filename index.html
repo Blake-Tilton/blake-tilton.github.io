@@ -1,16 +1,308 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Portfolio | Project Manager & Designer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blake Tilton | Reliable Processes & Content-Driven Design</title>
+    
+    <!-- External Typekit Link PROVIDED BY USER -->
+    <link rel="stylesheet" href="https://use.typekit.net/bka0zmc.css">
+
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { text-align: center; border: 1px solid #ddd; padding: 2rem; border-radius: 8px; }
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #373A3C; /* Main Background (Dark Gray) */
+            --border-color: #8D9091; /* Outline/Text Color (Light Gray) */
+            --content-bg: #373A3C; /* Background inside the content area */
+            --tab-active-bg: #373A3C; /* The active tab matches the body */
+            
+            --main-font: "sofia-pro", sans-serif; /* Fallback to Sofia Pro */
+            --header-font: "sofia-pro", sans-serif; /* Assumed header font */
+        }
+
+        /* Essential Reset for layout control */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; width: 100%; overflow: hidden; } /* Prevents scrolling on the main page */
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--border-color);
+            font-family: var(--main-font);
+            font-weight: 300; /* Matching the body weight from mockup */
+            font-size: 16px;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            padding: 2.5% 2%; /* Overall container padding */
+        }
+
+        /* --- THE LOGO/HEADER --- */
+        header {
+            width: 100%;
+            height: 8%; /* Specific height ratio from mockup */
+            padding-bottom: 2vh;
+            border-bottom: 1px solid var(--border-color); /* The line below the name */
+            display: flex;
+            align-items: center; /* Vertically center the text and tagline */
+            margin-bottom: 2%; /* Space before the tab system */
+        }
+
+        .header-main {
+            font-family: var(--header-font);
+            font-weight: 900; /* Heavy weight from mockup */
+            font-size: clamp(2rem, 4vw, 3.5rem); /* Responsive typography */
+            text-transform: uppercase;
+            letter-spacing: -0.02em; /* Slight tracking tighten */
+            margin-right: 0.5em; /* Space before the pipeline divider */
+        }
+
+        .tagline {
+            font-family: var(--header-font);
+            font-weight: 400;
+            font-size: clamp(1rem, 2vw, 1.6rem);
+            color: var(--border-color);
+            opacity: 0.9;
+        }
+
+        /* --- THE TAB & MAIN CONTAINER SYSTEM (CSS GRID) --- */
+        /* This is the complex visual container with the built-in logic */
+        
+        .main-ui-container {
+            flex: 1; /* Fills the rest of the vertical space */
+            display: grid;
+            grid-template-rows: auto 1fr; /* Row 1: Tabs | Row 2: Content */
+            height: 100%;
+            width: 100%;
+            /* Note: The 'containment' outline is handled differently on the content vs tabs */
+        }
+
+        /* Hides the actual functionality (the inputs) */
+        input[name="main-tabs"] { display: none; }
+
+        /* --- THE TABS (LABELS) --- */
+        .tabs-list {
+            grid-row: 1;
+            grid-column: 1;
+            display: flex;
+            padding-left: 2%; /* Indent the start of the tabs slightly */
+            z-index: 2; /* Tabs must sit on top of the content border */
+        }
+
+        .tab-label {
+            cursor: pointer;
+            padding: 10px 40px;
+            font-size: 1.3rem;
+            font-weight: 400;
+            text-transform: capitalize;
+            border: 1px solid var(--border-color); /* Full border default */
+            background: transparent; /* Makes the border line continuous */
+            margin-right: 8px; /* Small gap between tabs */
+            
+            /* The specific rounded corner shapes from the mockup (top-only) */
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            
+            /* Smooth transition on hover and activation */
+            transition: background 0.3s ease, border-bottom 0.1s ease;
+        }
+
+        .tab-label:hover { background: rgba(141, 144, 145, 0.1); }
+
+        /* --- THE CONTENT PANEL (The actual 'Container') --- */
+        .content-panel {
+            grid-row: 2;
+            grid-column: 1;
+            background-color: var(--content-bg);
+            border: 1px solid var(--border-color); /* The continuous outline */
+            border-radius: 12px;
+            margin-top: -1px; /* The 'Magic': Pulls the panel up to merge with the active tab border */
+            z-index: 1;
+            padding: 3% 4%; /* Inner padding for columns */
+            overflow: hidden; /* Stops content from spilling out of the main layout */
+        }
+
+        /* --- TAB INTERACTION LOGIC (The CSS-Only Part) --- */
+        
+        /* 1. When a radio button is checked: */
+        
+        /* Style the corresponding label to merge with the panel */
+        input[id="tab-home"]:checked ~ .tabs-list .label-home,
+        input[id="tab-work"]:checked ~ .tabs-list .label-work,
+        input[id="tab-personal"]:checked ~ .tabs-list .label-personal {
+            background-color: var(--tab-active-bg);
+            border-bottom: 2px solid var(--tab-active-bg); /* The core visual merge trick */
+            font-weight: 700;
+            transform: translateY(1px); /* Essential for a pixel-perfect merge */
+        }
+
+        /* 2. Control Content Visibility: */
+        
+        /* Default: All content hidden */
+        .tab-content { display: none; }
+
+        /* When 'tab-home' is checked, show the '.content-home' block */
+        input[id="tab-home"]:checked ~ .content-panel .content-home {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Repeat for other tabs */
+        input[id="tab-work"]:checked ~ .content-panel .content-work {
+            display: block; /* Different layout type for content */
+        }
+
+        input[id="tab-personal"]:checked ~ .content-panel .content-personal {
+            display: block;
+        }
+
+
+        /* --- CONTENT INTERIORS (SPECIFIC PAGE LAYOUTS) --- */
+        
+        /* The dual rounded rectangular panels (Flexbox layout) */
+        .content-panel-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            height: 100%;
+            width: 100%;
+            gap: 2%; /* Gap between the two panels */
+        }
+
+        /* Standard styling for the interior rounded rectangles */
+        .interior-panel {
+            flex: 1; /* Takes equal width */
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 5% 5% 8% 5%; /* Top/Side/Bottom/Side padding */
+            overflow-y: auto; /* Allow content to scroll inside these boxes if needed */
+        }
+
+        /* Content Title Styling */
+        .panel-title {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--border-color);
+        }
+
+        /* --- SPECIFIC COLUMN TWEAKS --- */
+
+        /* Right Column: "My Story" (Flexbox for fine-tuning text alignment) */
+        .content-home .panel-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Aligns text top-justified */
+            font-size: 0.95rem; /* Small font size from mockup */
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .content-home .panel-right p { margin-bottom: 1.2rem; }
+
+        /* Left Column: "My Pillars" (Vertical list) */
+        .pillar-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .pillar-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--border-color);
+        }
+
+        .pillar-description {
+            font-weight: 300;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.1em;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Coming Soon</h1>
-        <p>IT Infrastructure | Instructional Tech | Design</p>
-    </div>
+
+    <!-- SECTION 1: HEADER -->
+    <header>
+        <div class="header-main">Blake Tilton</div>
+        <div class="tagline">Reliable Processes | Content-Driven Design</div>
+    </header>
+
+    <!-- SECTION 2: MAIN UI CONTAINER (GRID BASED) -->
+    <main class="main-ui-container">
+
+        <!-- Functional (hidden) Inputs -->
+        <input type="radio" id="tab-home" name="main-tabs" checked>
+        <input type="radio" id="tab-work" name="main-tabs">
+        <input type="radio" id="tab-personal" name="main-tabs">
+
+        <!-- Visual Tabs (Labels) -->
+        <nav class="tabs-list">
+            <label for="tab-home" class="tab-label label-home">Home</label>
+            <label for="tab-work" class="tab-label label-work">Work</label>
+            <label for="tab-personal" class="tab-label label-personal">Personal</label>
+        </nav>
+
+        <!-- SECTION 3: THE CONTENT PANEL (The Continuous Border) -->
+        <div class="content-panel">
+
+            <!-- HOME CONTENT (MATCHING MOCKUP) -->
+            <div class="tab-content content-home">
+                <div class="content-panel-layout">
+                    
+                    <!-- Left Panel: Pillars -->
+                    <div class="interior-panel panel-left">
+                        <div class="panel-title">My Pillars</div>
+
+                        <div class="pillar-item">
+                            <div class="pillar-title">SOLID FRAMEWORK</div>
+                            <div class="pillar-description">Reliable technology systems & processes deliver repeatable excellence.</div>
+                        </div>
+
+                        <div class="pillar-item">
+                            <div class="pillar-title">CONTENT-DRIVEN</div>
+                            <div class="pillar-description">All design decisions are informed decisions and serve a clear objective.</div>
+                        </div>
+
+                        <div class="pillar-item">
+                            <div class="pillar-title">MENTORSHIP</div>
+                            <div class="pillar-description">Scaling requires talent development.</div>
+                        </div>
+
+                        <div class="pillar-item">
+                            <div class="pillar-title">USER EXPERIENCE</div>
+                            <div class="pillar-description">Seamless interactions that resonate.</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Story -->
+                    <div class="interior-panel panel-right">
+                        <div class="panel-title">My Story</div>
+                        <p>As a kid, I was either drawing or building. I loved to see how my ideas would take shape. When drawing characters wasn't enough to fulfill my visions, I made movies to give them life; when drawing houses was too flat, I built with Legos. When Legos looked cool but sat on a shelf, I built furniture. Unknown to me at the time, creativity was the launchpad for the processes and systems to make something useful, things that resonate with people.</p>
+                        <p>As an adult working through free lance. church media, and teaching graphics and video production, I learned that the best results come from a solid framework. Today, I optimize workflows that produce high-quality experiences for the audience by integrating creative strategies, technical infrastructure, and talent development.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- WORK CONTENT (FILLER TEXT) -->
+            <div class="tab-content content-work">
+                <div class="panel-title">Recent Work</div>
+                <p>This is where your work portfolio grid would live. You would use CSS Grid or Flexbox to place images and video embeds here.</p>
+                <p>Because the "tabs-list" is handled by CSS, navigating to this tab hides the "Home" content and shows this container instantly.</p>
+            </div>
+
+            <!-- PERSONAL CONTENT (FILLER TEXT) -->
+            <div class="tab-content content-personal">
+                <div class="panel-title">Personal Ventures</div>
+                <p>This section is for hobbies, personal design projects, or initiatives. It uses the same structural containers as the previous tab.</p>
+            </div>
+
+        </div> <!-- /content-panel -->
+
+    </main> <!-- /main-ui-container -->
+
 </body>
 </html>
