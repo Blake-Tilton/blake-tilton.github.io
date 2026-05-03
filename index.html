@@ -11,10 +11,10 @@
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            --bg-color: #373A3C; /* Main Background (Dark Gray) */
-            --border-color: #8D9091; /* Outline/Text Color (Light Gray) */
-            --content-bg: #373A3C; /* Background inside the content area */
-            --tab-active-bg: #373A3C; /* The active tab matches the body */
+            --bg-color: #3f3f3f; /* Main Background (Dark Gray) */
+            --border-color: #e5e5e5; /* Outline/Text Color (Light Gray) */
+            --content-bg: #3f3f3f; /* Background inside the content area */
+            --tab-active-bg: #3f3f3f; /* The active tab matches the body */
             
             --main-font: "roc-grotesk", sans-serif; /* Fallback to Sofia Pro */
             --header-font: "roc-grotesk-wide", sans-serif; /* Assumed header font */
@@ -40,8 +40,8 @@
         header {
             width: 100%;
             height: 8%; /* Specific height ratio from mockup */
-            padding-bottom: 2vh;
-            border-bottom: 1px solid var(--border-color); /* The line below the name */
+            padding-bottom: 10vh;
+            
             display: flex;
             align-items: baseline; /* Vertically center the text and tagline */
             margin-bottom: 2%; /* Space before the tab system */
@@ -99,8 +99,8 @@
             margin-right: 8px; /* Small gap between tabs */
             
             /* The specific rounded corner shapes from the mockup (top-only) */
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
             
             /* Smooth transition on hover and activation */
             transition: background 0.3s ease, border-bottom 0.1s ease;
@@ -114,7 +114,7 @@
             grid-column: 1;
             background-color: var(--content-bg);
             border: 1px solid var(--border-color); /* The continuous outline */
-            border-radius: 12px;
+            border-radius: 8px;
             margin-top: -1px; /* The 'Magic': Pulls the panel up to merge with the active tab border */
             z-index: 1;
             padding: 3% 4%; /* Inner padding for columns */
@@ -173,18 +173,20 @@
         .interior-panel {
             flex: 1; /* Takes equal width */
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 5% 5% 8% 5%; /* Top/Side/Bottom/Side padding */
+            border-radius: 8px;
+            padding: 2% 3% 5% 3%; /* Top/Side/Bottom/Side padding */
             overflow-y: auto; /* Allow content to scroll inside these boxes if needed */
         }
 
         /* Content Title Styling */
         .panel-title {
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--border-color);
-        }
+    font-family: var(--header-font); /* Changed from default to your wide font */
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--border-color);
+    text-transform: uppercase; /* Optional: adds to that "operating system" look */
+}
 
         /* --- SPECIFIC COLUMN TWEAKS --- */
 
@@ -206,12 +208,13 @@
         }
 
         .pillar-title {
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--border-color);
-        }
+    font-family: var(--header-font); /* Updates to Roc Grotesk Wide */
+    font-weight: 700;
+    font-size: 1.1rem; /* Slightly smaller than the main panel title */
+    text-transform: uppercase;
+    letter-spacing: 0.05em; /* Adds professional tracking to wide fonts */
+    color: var(--border-color);
+}
 
         .pillar-description {
             font-weight: 300;
