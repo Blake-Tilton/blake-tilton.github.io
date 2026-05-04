@@ -15,6 +15,8 @@
             --border-color: #e5e5e5; /* Outline/Text Color (Light Gray) */
             --content-bg: #3f3f3f; /* Background inside the content area */
             --tab-active-bg: #3f3f3f; /* The active tab matches the body */
+
+--radius-main: 8px;
             
             --main-font: "roc-grotesk", sans-serif; /* Fallback to Sofia Pro */
             --header-font: "roc-grotesk-wide", sans-serif; /* Assumed header font */
@@ -22,7 +24,7 @@
 
         /* Essential Reset for layout control */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; width: 100%; overflow: hidden; } /* Prevents scrolling on the main page */
+        html, body { height: 100%; width: 100%; overflow-y: auto; }
 
         body {
             background-color: var(--bg-color);
@@ -68,14 +70,14 @@
         /* This is the complex visual container with the built-in logic */
         
         .main-ui-container {
-            flex: 1; /* Fills the rest of the vertical space */
-            display: grid;
-            grid-template-rows: auto 1fr; /* Row 1: Tabs | Row 2: Content */
-            height: 100%;
-            width: 100%;
-            /* Note: The 'containment' outline is handled differently on the content vs tabs */
-        }
-
+    display: grid;
+    /* FIX: Row 1 (Tabs) is rigid. Row 2 (Content) is flexible/auto. */
+    grid-template-rows: min-content auto; 
+    align-items: start;
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+}
         /* Hides the actual functionality (the inputs) */
         input[name="main-tabs"] { display: none; }
 
@@ -85,7 +87,11 @@
             grid-column: 1;
             display: flex;
             padding-left: 2%; /* Indent the start of the tabs slightly */
+Padding-bottom: 0;
             z-index: 2; /* Tabs must sit on top of the content border */
+align-items: stretch;
+    height: auto; /* Let the labels define the height */
+    margin-bottom: 0;
         }
 
         .tab-label {
@@ -110,17 +116,20 @@
 
         /* --- THE CONTENT PANEL (The actual 'Container') --- */
         .content-panel {
-            grid-row: 2;
-            grid-column: 1;
-            background-color: var(--content-bg);
-            border: 1px solid var(--border-color); /* The continuous outline */
-            border-radius: 8px;
-            margin-top: -1px; /* The 'Magic': Pulls the panel up to merge with the active tab border */
-            z-index: 1;
-            padding: 3% 4%; /* Inner padding for columns */
-            overflow: hidden; /* Stops content from spilling out of the main layout */
-        }
-
+    grid-row: 2;
+    grid-column: 1;
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-main);
+    margin-top: -1px;
+    z-index: 1;
+    padding: 3% 4%;
+    min-height: 500px; /* ADD THIS: Gives the border a physical shape even if empty */
+    height: auto;
+    overflow: visible; /* Keeps things tidy */
+display: block; 
+    overflow: visible; 
+}
         /* --- TAB INTERACTION LOGIC (The CSS-Only Part) --- */
         
         /* 1. When a radio button is checked: */
@@ -135,27 +144,31 @@
             transform: translateY(1px); /* Essential for a pixel-perfect merge */
         }
 
-        /* 2. Control Content Visibility: */
-        
-        /* Default: All content hidden */
-        .tab-content { display: none; }
+       /* 1. Default: Hide all content */
+.tab-content { 
+    display: none !important; 
+}
 
-        /* When 'tab-home' is checked, show the '.content-home' block */
-        input[id="tab-home"]:checked ~ .content-panel .content-home {
-            display: flex;
-            height: 100%;
-            width: 100%;
-        }
+/* 2. The Master Switch: Connect Radios to IDs */
+#tab-home:checked ~ .content-panel #home {
+    display: flex !important; /* Flex for your dual-panel layout */
+}
 
-        /* Repeat for other tabs */
-        input[id="tab-work"]:checked ~ .content-panel .content-work {
-            display: block; /* Different layout type for content */
-        }
+#tab-work:checked ~ .content-panel #work {
+    display: block !important;
+}
 
-        input[id="tab-personal"]:checked ~ .content-panel .content-personal {
-            display: block;
-        }
+#tab-personal:checked ~ .content-panel #personal {
+    display: block !important;
+}
 
+/* 3. Internal Work/Personal Project Details */
+/* This handles showing the specific project detail when the internal radio is clicked */
+#tab-work:checked ~ .content-panel #w1-trigger:checked ~ .tab-content-grid #detail-w1,
+#tab-work:checked ~ .content-panel #w2-trigger:checked ~ .tab-content-grid #detail-w2,
+#tab-personal:checked ~ .content-panel #p1-trigger:checked ~ .tab-content-grid #detail-p1 {
+    display: block !important;
+}
 
         /* --- CONTENT INTERIORS (SPECIFIC PAGE LAYOUTS) --- */
         
@@ -173,7 +186,7 @@
         .interior-panel {
             flex: 1; /* Takes equal width */
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: var(--radius-main);
             padding: 2% 3% 5% 3%; /* Top/Side/Bottom/Side padding */
             overflow-y: auto; /* Allow content to scroll inside these boxes if needed */
         }
@@ -223,6 +236,163 @@
             margin-top: 0.1em;
         }
 
+/* Layout Grid */
+.tab-content-grid {
+    display: flex;
+    gap: 20px;
+    align-items: stretch; /* Ensures columns stay same height */
+    height: auto;
+    min-height: 60vh;
+overflow: visible;
+}
+
+.overview-column { flex: 1; } /* Narrower left side */
+.detail-column { flex: 2; }   /* Wider right side for media */
+
+/* Project Cards */
+.project-card {
+    display: block;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-main);
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.project-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Flexible Media System */
+/* Ensure media blocks are visible and functional */
+.media-block {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05); /* The dark gray fill */
+    border: 1px solid var(--border-color); /* The white outline from mockup */
+    border-radius: var(--radius-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    min-height: 200px; /* Ensures they don't collapse if empty */
+    color: var(--border-color);
+}
+
+.video-placeholder {
+    aspect-ratio: 16 / 9;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    align-items: stretch; /* Forces both blocks to the same height */
+}
+
+.image-grid .media-block {
+    min-height: 200px; /* Smaller height for grid items */
+}
+
+/* RE-SYNC THE SWITCHES */
+/* If a Work radio is checked, show only the corresponding Work detail */
+#w1-trigger:checked ~ .tab-content-grid #detail-w1,
+#w2-trigger:checked ~ .tab-content-grid #detail-w2,
+#p1-trigger:checked ~ .tab-content-grid #detail-p1,
+#p2-trigger:checked ~ .tab-content-grid #detail-p2 { 
+    display: block !important; 
+}
+/* Vertical Extension */
+.interior-panel {
+    height: fit-content;
+    height: auto;
+}
+
+/* 1. System Logic: Hide triggers and inactive panels */
+.state-trigger {
+    display: none;
+}
+
+.project-detail {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 2. The "Switch" Logic */
+/* Work Tab Logic */
+/* --- WORK LOGIC --- */
+#w1-trigger:checked ~ .tab-content-grid #detail-w1 { display: block; }
+#w2-trigger:checked ~ .tab-content-grid #detail-w2 { display: block; }
+#w3-trigger:checked ~ .tab-content-grid #detail-w3 { display: block; }
+
+#w1-trigger:checked ~ .tab-content-grid label[for="w1-trigger"],
+#w2-trigger:checked ~ .tab-content-grid label[for="w2-trigger"],
+#w3-trigger:checked ~ .tab-content-grid label[for="w3-trigger"] {
+    border-color: var(--border-color);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- PERSONAL LOGIC --- */
+#p1-trigger:checked ~ .tab-content-grid #detail-p1 { display: block; }
+#p2-trigger:checked ~ .tab-content-grid #detail-p2 { display: block; }
+
+#p1-trigger:checked ~ .tab-content-grid label[for="p1-trigger"],
+#p2-trigger:checked ~ .tab-content-grid label[for="p2-trigger"] {
+    border-color: var(--border-color);
+    background: rgba(255, 255, 255, 0.1);
+}
+/* 4. Layout Grid */
+.tab-content-grid {
+    display: flex;
+    gap: 20px;
+    align-items: stretch; /* Matches image_0bd8a5.png: columns stay synced */
+    margin-top: 10px;
+}
+
+.overview-column { flex: 1; min-width: 300px; }
+.detail-column { flex: 2; }
+
+/* 5. Content Blocks */
+.project-card {
+    display: block;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-main);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Base styles stay the same */
+.media-block {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Important for actual images */
+}
+
+/* Size Variants */
+.media-sm { min-height: 150px; }
+.media-md { min-height: 300px; }
+.media-lg { min-height: 500px; }
+.media-full { aspect-ratio: 16 / 9; } /* Best for your video infrastructure projects */
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* 6. Smooth Transition */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
     </style>
 </head>
 <body>
@@ -252,8 +422,8 @@
         <div class="content-panel">
 
             <!-- HOME CONTENT (MATCHING MOCKUP) -->
-            <div class="tab-content content-home">
-                <div class="content-panel-layout">
+            <div id="home" class="tab-content"> <!-- Added id="home" -->
+        <div class="content-panel-layout">
                     
                     <!-- Left Panel: Pillars -->
                     <div class="interior-panel panel-left">
@@ -283,29 +453,107 @@
                     <!-- Right Panel: Story -->
                     <div class="interior-panel panel-right">
                         <div class="panel-title">My Story</div>
-                        <p>As a kid, I was either drawing or building. I loved to see how my ideas would take shape. When drawing characters wasn't enough to fulfill my visions, I made movies to give them life; when drawing houses was too flat, I built with Legos. When Legos looked cool but sat on a shelf, I built furniture. Unknown to me at the time, creativity was the launchpad for the processes and systems to make something useful, things that resonate with people.</p>
-                        <p>As an adult working through free lance. church media, and teaching graphics and video production, I learned that the best results come from a solid framework. Today, I optimize workflows that produce high-quality experiences for the audience by integrating creative strategies, technical infrastructure, and talent development.</p>
+                        <p>New portfolio in development. Content is on the way.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
                     </div>
 
                 </div>
             </div>
 
-            <!-- WORK CONTENT (FILLER TEXT) -->
-            <div class="tab-content content-work">
-                <div class="panel-title">Recent Work</div>
-                <p>This is where your work portfolio grid would live. You would use CSS Grid or Flexbox to place images and video embeds here.</p>
-                <p>Because the "tabs-list" is handled by CSS, navigating to this tab hides the "Home" content and shows this container instantly.</p>
-            </div>
+            <!-- WORK TAB -->
+<div id="work" class="tab-content"> <!-- Added id="work" -->
+        
+    <!-- Unique Work State Managers -->
+    <input type="radio" name="work-toggle" id="w1-trigger" class="state-trigger" checked>
+    <input type="radio" name="work-toggle" id="w2-trigger" class="state-trigger">
+<input type="radio" name="work-toggle" id="w3-trigger" class="state-trigger">
+<div class="tab-content-grid">
 
-            <!-- PERSONAL CONTENT (FILLER TEXT) -->
-            <div class="tab-content content-personal">
-                <div class="panel-title">Personal Ventures</div>
-                <p>This section is for hobbies, personal design projects, or initiatives. It uses the same structural containers as the previous tab.</p>
-            </div>
+        <div class="interior-panel overview-column">
+            <div class="panel-title">Overview</div>
+            <label class="project-card" for="w1-trigger">
+                <div class="pillar-title">Work Project 1</div>
+<div class="pillar-description">Lorem Ipsum</div>
+            </label>
+<label class="project-card" for="w2-trigger">
+                <div class="pillar-title">Work Project 2</div>
+<div class="pillar-description">Lorem Ipsum</div>
+            </label>
+<label class="project-card" for="w3-trigger">
+                <div class="pillar-title">Work Project 3</div>
+<div class="pillar-description">Lorem Ipsum</div>
+            </label>
+        </div>
 
-        </div> <!-- /content-panel -->
+        <div class="interior-panel detail-column">
+            <div class="project-detail" id="detail-w1">
+                 <div class="panel-title">Work Project 1</div>
+                <div class="media-block media-full">Video Content Placeholder</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
+            </div>
+<div class="project-detail" id="detail-w2">
+                 <div class="panel-title">Work Project 2</div>
+                <div class="media-block md">Image Placeholder</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
+            </div>
+<div class="project-detail" id="detail-w3">
+                 <div class="panel-title">Work Project 3</div>
+                <div class="media-block media-lg">Image Placeholder</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
+<div class="media-block media-sm">Image Placeholder</div>
+</div>            
+</div>
+        </div>
+    </div> <!-- Grid closes AFTER both columns -->
+
+<!-- PERSONAL TAB -->
+<div id="personal" class="tab-content"> <!-- id="personal" already exists -->
+        
+    <!-- Unique Personal State Managers -->
+    <input type="radio" name="personal-toggle" id="p1-trigger" class="state-trigger" checked>
+    <input type="radio" name="personal-toggle" id="p2-trigger" class="state-trigger">
+<div class="tab-content-grid">
+
+        <div class="interior-panel overview-column">
+            <div class="panel-title">Overview</div>
+            <label class="project-card" for="p1-trigger">
+                <div class="pillar-title">Personal Project 1</div>
+<div class="pillar-description">Lorem Ipsum</div>
+            </label>
+<label class="project-card" for="p2-trigger">
+                <div class="pillar-title">Personal Project 2</div>
+<div class="pillar-description">Lorem Ipsum</div>
+            </label>
+        </div>
+
+        <div class="interior-panel detail-column">
+            <div class="project-detail" id="detail-p1">
+<div class="panel-title">Personal Project 1</div>
+                <div class="media-block media-sm">Image 1 Content Placeholder</div>
+            </div>
+<div class="project-detail" id="detail-p2">
+<div class="panel-title">Personal Project 2</div>
+                <div class="media-block media-lg">Image 2 Content Placeholder</div>
+            </div>
+        </div>
+    </div>
+</div></div>        </div> <!-- /content-panel -->
 
     </main> <!-- /main-ui-container -->
+
+<script>
+    console.log("DOM fully loaded");
+    const workTab = document.getElementById('work');
+    const personalTab = document.getElementById('personal');
+    
+    console.log("Work Tab exists:", !!workTab);
+    console.log("Personal Tab exists:", !!personalTab);
+    
+    // Check if both are active at the same time
+    if(workTab.classList.contains('active') && personalTab.classList.contains('active')) {
+        console.warn("SYSTEM ERROR: Both tabs are active. This is why content is overlapping.");
+    }
+</script>
 
 </body>
 </html>
