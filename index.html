@@ -404,18 +404,18 @@ overflow: visible;
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 15px;
-        padding-bottom: 40px !important; /* Reduced from 100px since height is now fluid */
+        padding-bottom: 20px !important; /* Reduced from 100px since height is now fluid */
         height: auto !important;
     }
 
-    /* Fix the tagline wrapping overlap */
-    .tagline-class-name { /* Replace with your actual tagline class */
-        display: block;
-        margin-bottom: 20px;
-        line-height: 1.4;
+    /* 2. HOME TAB: Stack the My Pillars and My Story panels */
+    .content-panel-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px;
     }
 
-    /* 2. TABS: Keep the 'Seal' tight regardless of header height */
+/* 2. TABS: Keep the 'Seal' tight regardless of header height */
     .tabs-list {
         display: flex !important;
         padding-left: 20px;
@@ -425,37 +425,50 @@ overflow: visible;
         width: 100%;
         overflow-x: auto; /* Allow horizontal swipe if tabs wrap */
     }
+    .tab-label {
+        padding: 8px 15px;
+        font-size: 1.1rem;
+        margin-right: 4px;
+    }
 
-    /* 3. THE "REBEL" FIX: Force ALL content grids to stack */
-    .tab-content-grid,
-    [class*="tab-content"] { /* Catch-all for similar naming conventions */
+    /* 4. WORK & PERSONAL GRIDS: Force vertical stacking of Overview and Details */
+    /* This fixes the side-by-side squashing seen in image_2ad9d8.png and image_2ad982.png */
+    .tab-content-grid {
         display: flex !important;
         flex-direction: column !important;
         gap: 30px !important;
     }
 
-    /* Ensure every project detail block is forced into the vertical flow */
-    .project-detail, 
-    [id^="detail-"] { 
-        display: none; /* Keep the 'radio-toggle' logic working */
+    .overview-column, 
+    .detail-column {
         width: 100% !important;
+        flex: none !important;
     }
 
-    /* Show active projects as full-width blocks when triggered */
-    .state-trigger:checked ~ .tab-content-grid [id^="detail-"] {
-        display: block !important;
-    }
-
-    /* 4. MEDIA: Universal proportion lock */
-    .media-block, 
-    video, 
-    img {
+    /* 5. MEDIA: Constrain proportions to prevent stretching */
+    /* Fixes the disproportionate placeholders in Personal view */
+    .media-block {
         width: 100% !important;
         height: auto !important;
-        aspect-ratio: 16 / 9 !important;
+        aspect-ratio: 16 / 9 !important; 
         object-fit: cover;
     }
-}}    </style>
+
+    /* 6. MAIN UI: Ensure rows accommodate stacked content height */
+    .main-ui-container {
+        grid-template-rows: auto auto !important;
+        height: auto !important;
+        min-height: 100vh;
+        align-items: start !important;
+    }
+
+    /* 7. SAFETY: Ensure triggers don't add invisible vertical space */
+    input[name="main-tabs"],
+    .state-trigger {
+        display: none !important;
+        position: absolute;
+    }
+}    </style>
 </head>
 <body>
 
