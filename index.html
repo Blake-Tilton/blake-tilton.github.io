@@ -447,13 +447,11 @@ overflow: visible;
         overflow-x: hidden !important; /* Prevents project divs from horizontal scrolling */
     }
 
-    .overview-column, 
-    .detail-column {
+    .overview-column {
+        min-width: 0 !important; /* Forces the column to respect the 100% width rule */
         width: 100% !important;
         flex: none !important;
-        max-width: 100% !important;
     }
-
     /* 5. MEDIA: Constrain proportions and ensure width stays in bounds */
     .media-block {
         width: 100% !important;
@@ -495,6 +493,10 @@ overflow: visible;
     .image-grid .media-block {
         width: 100% !important;
         min-height: 150px !important; /* Slightly shorter for mobile stack */
+    }
+.pillar-title, .panel-title {
+        white-space: normal !important;
+        overflow-wrap: break-word !important;
     }
 }
 </style>
