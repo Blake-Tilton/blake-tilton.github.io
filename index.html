@@ -480,19 +480,22 @@ overflow: visible;
         display: none !important;
         position: absolute;
     }
-/* The "Rebel Project" Fix: Force the image grid to stack */
+/* 1. RESET MIN-HEIGHT: Let the phone width dictate the height instead */
+    .media-sm, 
+    .media-md, 
+    .media-lg, 
+    .media-block {
+        min-height: 0 !important; 
+        height: auto !important;
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important; /* Keep the consistent 1970s/80s cinematic feel */
+    }
+
+    /* 2. FIX THE GRID: Stack your image-grid so they don't fight for horizontal space */
     .image-grid {
         display: flex !important;
         flex-direction: column !important;
-        grid-template-columns: 1fr !important; /* Safety fallback */
         gap: 15px;
-        width: 100% !important;
-    }
-
-    /* Ensure the blocks within the grid don't try to maintain desktop sizing */
-    .image-grid .media-block {
-        width: 100% !important;
-        min-height: 150px !important; /* Slightly shorter for mobile stack */
     }
 .pillar-title, .panel-title {
         white-space: normal !important;
@@ -603,9 +606,9 @@ overflow: visible;
             </div>
             <div class="project-detail" id="detail-w3">
                 <div class="panel-title">Work Project 3</div>
-                
+                <div class="media-block media-lg">Image Placeholder</div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
-                
+                <div class="media-block media-sm">Image Placeholder</div>
             </div>
         </div>
     </div> <!-- Grid closes AFTER both columns -->
