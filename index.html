@@ -439,12 +439,13 @@ overflow: visible;
 
     /* 4. WORK & PERSONAL GRIDS: Universal stacking and width containment */
     .tab-content-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 30px !important;
         width: 100% !important;
-        max-width: 100% !important;
-        overflow-x: hidden !important; /* Prevents project divs from horizontal scrolling */
+        max-width: 100vw !important; /* Forces the width to the viewport */
+        flex-shrink: 1 !important;   /* Allows the container to shrink if needed */
+        flex-basis: auto !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
     }
 
     .overview-column, 
@@ -482,7 +483,14 @@ overflow: visible;
         display: none !important;
         position: absolute;
     }
-}</style>
+/* Target Project 3 and Personal 2 specifically if they use different media sizes */
+    .media-lg, .media-sm, .media-full, .media-block {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+</style>
 </head>
 <body>
 
