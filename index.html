@@ -70,7 +70,7 @@
         /* This is the complex visual container with the built-in logic */
         
         .main-ui-container {
-    display: flex !important;
+    display: grid;
     /* FIX: Row 1 (Tabs) is rigid. Row 2 (Content) is flexible/auto. */
     grid-template-rows: min-content auto; 
     align-items: start;
@@ -349,7 +349,7 @@ overflow: visible;
     margin-top: 10px;
 }
 
-.overview-column { flex: 1; min-width: 300px; }
+.overview-column { flex: 1; min-width: 0px; }
 .detail-column { flex: 2; }
 
 /* 5. Content Blocks */
