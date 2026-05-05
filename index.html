@@ -482,7 +482,22 @@ overflow: visible;
         display: none !important;
         position: absolute;
     }
-}</style>
+/* The "Rebel Project" Fix: Force the image grid to stack */
+    .image-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important; /* Safety fallback */
+        gap: 15px;
+        width: 100% !important;
+    }
+
+    /* Ensure the blocks within the grid don't try to maintain desktop sizing */
+    .image-grid .media-block {
+        width: 100% !important;
+        min-height: 150px !important; /* Slightly shorter for mobile stack */
+    }
+}
+</style>
 </head>
 <body>
 
