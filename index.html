@@ -365,16 +365,21 @@ overflow: visible;
 
 /* Base styles stay the same */
 .media-block {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
+    width: 100%; /* Fill the container width */
+    height: auto; /* Let the aspect ratio determine height */
+    aspect-ratio: 16 / 9; /* Standard video ratio */
+    background-color: #333;
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-main);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Important for actual images */
+    object-fit: cover; /* Ensures actual images fill the space without distortion */
 }
 
+/* Specific size for smaller image placeholders */
+.media-sm {
+    aspect-ratio: 4 / 3; 
+}
 /* Size Variants */
 .media-sm { min-height: 150px; }
 .media-md { min-height: 300px; }
@@ -393,7 +398,75 @@ overflow: visible;
     to { opacity: 1; transform: translateY(0); }
 }
 
-    </style>
+@media (max-width: 768px) {
+    /* 1. HEADER: Stack items and maintain the spacing you liked */
+    header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px;
+        padding-bottom: 100px; 
+    }
+
+    /* 2. HOME TAB: Stack the My Pillars and My Story panels */
+    .content-panel-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px;
+    }
+
+    /* 3. TABS: Flush alignment and sealing the 'Container Drop' */
+    .tabs-list {
+        display: flex !important;
+        padding-left: 20px; /* Restored px unit to fix the 'step' */
+        justify-content: flex-start;
+        margin-bottom: -1px; /* Forced negative margin to seal the gap to the panel */
+        height: auto;
+    }
+
+    .tab-label {
+        padding: 8px 15px;
+        font-size: 1.1rem;
+        margin-right: 4px;
+    }
+
+    /* 4. WORK & PERSONAL GRIDS: Force vertical stacking of Overview and Details */
+    /* This fixes the side-by-side squashing seen in image_2ad9d8.png and image_2ad982.png */
+    .tab-content-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+    }
+
+    .overview-column, 
+    .detail-column {
+        width: 100% !important;
+        flex: none !important;
+    }
+
+    /* 5. MEDIA: Constrain proportions to prevent stretching */
+    /* Fixes the disproportionate placeholders in Personal view */
+    .media-block {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important; 
+        object-fit: cover;
+    }
+
+    /* 6. MAIN UI: Ensure rows accommodate stacked content height */
+    .main-ui-container {
+        grid-template-rows: auto auto !important;
+        height: auto !important;
+        min-height: 100vh;
+        align-items: start !important;
+    }
+
+    /* 7. SAFETY: Ensure triggers don't add invisible vertical space */
+    input[name="main-tabs"],
+    .state-trigger {
+        display: none !important;
+        position: absolute;
+    }
+}    </style>
 </head>
 <body>
 
