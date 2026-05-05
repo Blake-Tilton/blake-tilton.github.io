@@ -399,12 +399,17 @@ overflow: visible;
 }
 
 @media (max-width: 768px) {
+    /* 0. GLOBAL RESET: Prevents padding from expanding width beyond 100% */
+    * {
+        box-sizing: border-box !important;
+    }
+
     /* 1. HEADER: Allow height to grow with wrapped text */
     header {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 15px;
-        padding-bottom: 20px !important; /* Reduced from 100px since height is now fluid */
+        padding-bottom: 20px !important; 
         height: auto !important;
     }
 
@@ -415,7 +420,7 @@ overflow: visible;
         gap: 20px;
     }
 
-/* 2. TABS: Keep the 'Seal' tight regardless of header height */
+    /* 3. TABS: Keep the 'Seal' tight regardless of header height */
     .tabs-list {
         display: flex !important;
         padding-left: 20px;
@@ -425,50 +430,59 @@ overflow: visible;
         width: 100%;
         overflow-x: auto; /* Allow horizontal swipe if tabs wrap */
     }
+
     .tab-label {
         padding: 8px 15px;
         font-size: 1.1rem;
         margin-right: 4px;
     }
 
-    /* 4. WORK & PERSONAL GRIDS: Force vertical stacking of Overview and Details */
-    /* This fixes the side-by-side squashing seen in image_2ad9d8.png and image_2ad982.png */
+    /* 4. WORK & PERSONAL GRIDS: Universal stacking and width containment */
     .tab-content-grid {
         display: flex !important;
         flex-direction: column !important;
         gap: 30px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important; /* Prevents project divs from horizontal scrolling */
     }
 
     .overview-column, 
     .detail-column {
         width: 100% !important;
         flex: none !important;
+        max-width: 100% !important;
     }
 
-    /* 5. MEDIA: Constrain proportions to prevent stretching */
-    /* Fixes the disproportionate placeholders in Personal view */
+    /* 5. MEDIA: Constrain proportions and ensure width stays in bounds */
     .media-block {
         width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
         aspect-ratio: 16 / 9 !important; 
         object-fit: cover;
     }
 
-    /* 6. MAIN UI: Ensure rows accommodate stacked content height */
+    /* 6. MAIN UI: Ensure rows accommodate stacked content height and fit screen */
     .main-ui-container {
         grid-template-rows: auto auto !important;
         height: auto !important;
         min-height: 100vh;
         align-items: start !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
     }
 
     /* 7. SAFETY: Ensure triggers don't add invisible vertical space */
     input[name="main-tabs"],
+    input[name="work-toggle"],
+    input[name="personal-toggle"],
     .state-trigger {
         display: none !important;
         position: absolute;
     }
-}    </style>
+}</style>
 </head>
 <body>
 
@@ -536,84 +550,81 @@ overflow: visible;
             </div>
 
             <!-- WORK TAB -->
-<div id="work" class="tab-content"> <!-- Added id="work" -->
-        
+<div id="work" class="tab-content">
     <!-- Unique Work State Managers -->
     <input type="radio" name="work-toggle" id="w1-trigger" class="state-trigger" checked>
     <input type="radio" name="work-toggle" id="w2-trigger" class="state-trigger">
-<input type="radio" name="work-toggle" id="w3-trigger" class="state-trigger">
-<div class="tab-content-grid">
+    <input type="radio" name="work-toggle" id="w3-trigger" class="state-trigger">
 
+    <div class="tab-content-grid">
         <div class="interior-panel overview-column">
             <div class="panel-title">Overview</div>
             <label class="project-card" for="w1-trigger">
                 <div class="pillar-title">Work Project 1</div>
-<div class="pillar-description">Lorem Ipsum</div>
+                <div class="pillar-description">Lorem Ipsum</div>
             </label>
-<label class="project-card" for="w2-trigger">
+            <label class="project-card" for="w2-trigger">
                 <div class="pillar-title">Work Project 2</div>
-<div class="pillar-description">Lorem Ipsum</div>
+                <div class="pillar-description">Lorem Ipsum</div>
             </label>
-<label class="project-card" for="w3-trigger">
+            <label class="project-card" for="w3-trigger">
                 <div class="pillar-title">Work Project 3</div>
-<div class="pillar-description">Lorem Ipsum</div>
+                <div class="pillar-description">Lorem Ipsum</div>
             </label>
         </div>
 
         <div class="interior-panel detail-column">
             <div class="project-detail" id="detail-w1">
-                 <div class="panel-title">Work Project 1</div>
+                <div class="panel-title">Work Project 1</div>
                 <div class="media-block media-full">Video Content Placeholder</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
             </div>
-<div class="project-detail" id="detail-w2">
-                 <div class="panel-title">Work Project 2</div>
+            <div class="project-detail" id="detail-w2">
+                <div class="panel-title">Work Project 2</div>
                 <div class="media-block md">Image Placeholder</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
             </div>
-<div class="project-detail" id="detail-w3">
-                 <div class="panel-title">Work Project 3</div>
+            <div class="project-detail" id="detail-w3">
+                <div class="panel-title">Work Project 3</div>
                 <div class="media-block media-lg">Image Placeholder</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam sed faucibus nisi. Donec vitae est nulla. Nunc elementum a augue eu viverra. Maecenas mauris leo, venenatis vel maximus id, vestibulum sed tortor. Cras sem libero, egestas et euismod ac, pulvinar in sem. Praesent ullamcorper efficitur risus, eget pellentesque augue consectetur in. Suspendisse eget arcu ac erat tristique tincidunt sit amet in quam. Pellentesque risus justo, aliquam quis arcu a, rutrum sollicitudin dolor. Donec et tempus est, a egestas nunc. Sed venenatis cursus magna sed cursus. Phasellus pretium, dolor vitae consequat commodo, est felis dapibus nunc, rhoncus porttitor eros sem nec dui. Nunc varius est arcu, non aliquet est dictum id. Nulla facilisi.</p>
-<div class="media-block media-sm">Image Placeholder</div>
-</div>            
-</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
+                <div class="media-block media-sm">Image Placeholder</div>
+            </div>
         </div>
     </div> <!-- Grid closes AFTER both columns -->
+</div> <!-- Closes Work Tab -->
 
 <!-- PERSONAL TAB -->
-<div id="personal" class="tab-content"> <!-- id="personal" already exists -->
-        
+<div id="personal" class="tab-content">
     <!-- Unique Personal State Managers -->
     <input type="radio" name="personal-toggle" id="p1-trigger" class="state-trigger" checked>
     <input type="radio" name="personal-toggle" id="p2-trigger" class="state-trigger">
-<div class="tab-content-grid">
 
+    <div class="tab-content-grid">
         <div class="interior-panel overview-column">
             <div class="panel-title">Overview</div>
             <label class="project-card" for="p1-trigger">
                 <div class="pillar-title">Personal Project 1</div>
-<div class="pillar-description">Lorem Ipsum</div>
+                <div class="pillar-description">Lorem Ipsum</div>
             </label>
-<label class="project-card" for="p2-trigger">
+            <label class="project-card" for="p2-trigger">
                 <div class="pillar-title">Personal Project 2</div>
-<div class="pillar-description">Lorem Ipsum</div>
+                <div class="pillar-description">Lorem Ipsum</div>
             </label>
         </div>
 
         <div class="interior-panel detail-column">
             <div class="project-detail" id="detail-p1">
-<div class="panel-title">Personal Project 1</div>
+                <div class="panel-title">Personal Project 1</div>
                 <div class="media-block media-sm">Image 1 Content Placeholder</div>
             </div>
-<div class="project-detail" id="detail-p2">
-<div class="panel-title">Personal Project 2</div>
+            <div class="project-detail" id="detail-p2">
+                <div class="panel-title">Personal Project 2</div>
                 <div class="media-block media-lg">Image 2 Content Placeholder</div>
             </div>
         </div>
-    </div>
-</div></div>        </div> <!-- /content-panel -->
-
+    </div> <!-- Closes Personal Grid -->
+</div> <!-- Closes Personal Tab -->
     </main> <!-- /main-ui-container -->
 
 <script>
