@@ -16,7 +16,7 @@
             --content-bg: #3f3f3f; /* Background inside the content area */
             --tab-active-bg: #3f3f3f; /* The active tab matches the body */
 
---radius-main: 8px;
+--radius-main: 4px;
             
             --main-font: "roc-grotesk", sans-serif; /* Fallback to Sofia Pro */
             --header-font: "roc-grotesk-wide", sans-serif; /* Assumed header font */
@@ -96,7 +96,7 @@ align-items: stretch;
 
         .tab-label {
             cursor: pointer;
-            padding: 10px 40px;
+            padding: 2.5px 15px;
             font-size: 1.3rem;
             font-weight: 400;
             text-transform: capitalize;
@@ -104,9 +104,8 @@ align-items: stretch;
             background: transparent; /* Makes the border line continuous */
             margin-right: 8px; /* Small gap between tabs */
             
-            /* The specific rounded corner shapes from the mockup (top-only) */
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+            border-top-left-radius: var(--radius-main);
+    border-top-right-radius: var(--radius-main);
             
             /* Smooth transition on hover and activation */
             transition: background 0.3s ease, border-bottom 0.1s ease;
