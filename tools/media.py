@@ -38,12 +38,7 @@ IMAGES = {
 
     "pbc-booth":            ("Church/PBC Media Photo.png", CONTENT),
     "pbc-logo":             ("Church/PBC Logo V TW on Grey.png", CONTENT),
-    "pbc-first-christmas":  ("Sermon Series/FirstChristmas Full.png", CONTENT),
-    "pbc-grab-a-corner":    ("Sermon Series/GAC Title.png", CONTENT),
-    "pbc-membership":       ("Sermon Series/Membership Matters Title.jpg", CONTENT),
-    "pbc-new-beginnings":   ("Sermon Series/New Beginnings Title.jpg", CONTENT),
     "pbc-palm-sunday":      ("Sermon Series/Palm Sunday 23 Title.jpg", CONTENT),
-    "pbc-to-be-continued":  ("Sermon Series/To Be Continued Title.jpg", CONTENT),
 
     "nl-kids-wall":         ("Church/NL/16e0e418-88ab-4b25-95db-834fa7a5573b_rw_1920.JPG", CONTENT),
     "nl-master-plan":       ("Church/NL/38a26a7f-da21-46f8-a3e4-8d15970fbbef_rw_1920.jpg", CONTENT),
@@ -52,13 +47,8 @@ IMAGES = {
     "nl-next-step":         ("Church/NL/6fbbe646-c862-4eac-bd17-25ee03d33623_rw_1920.jpg", CONTENT),
     "nl-cup":               ("Church/NL/abe27409-1193-4aa5-98ce-85874d50e5bd_rw_1920.jpg", CONTENT),
     "nl-connect":           ("Church/NL/e0ef21fe-719b-4184-b0ab-4607cd207968_rw_1920.jpg", CONTENT),
-
-    "ev-game-on":           ("VBS Camp/b817d172-03f6-4864-b808-8130269a97a1_rw_1920.jpg", CONTENT),
-    "ev-chosen":            ("VBS Camp/5fa36288-bcb7-45c1-bbac-7d7dc279c83c_rw_1200.jpg", CONTENT),
-    "ev-trust":             ("VBS Camp/8d537f16-df49-47f1-9940-e94a17d84e4b_rw_1200.jpg", CONTENT),
     "ev-treasure":          ("VBS Camp/13fff2cd-d462-4471-89d3-3c5c4950c8e6_rw_1200.jpg", CONTENT),
     "ev-camp-wannabe":      ("VBS Camp/0e800ba1-40a3-4c57-93ae-382f534cc8e9_rw_1200.jpg", CONTENT),
-    "ev-faith":             ("VBS Camp/21457f61-9e0e-4cd2-9a21-a7a1f17f07ed_rw_1200.jpg", CONTENT),
 
     "p-lounge-chair":       ("Personal/Woodwork/103 Lounge Chair.png", GALLERY),
     "p-lounge-chair-sides": ("Furniture/Lounge Chair sides.png", GALLERY),
@@ -84,7 +74,6 @@ VIDEOS = {
     "st-bn-sting":        ("School/BN Sting Yellow.mov", 1920, 3000, True, 4),
     "st-sports-package":  ("School/Sports Package.mp4", 1920, 3000, True, 10),
     "pbc-easter-24":      ("Sermon Series/Easter 24 Title Loop.mp4", 1280, 1800, False, 2),
-    "pbc-his-mercy":      ("Sermon Series/His Mercy Title Loop.mp4", 1280, 1800, False, 2),
     "pbc-live-by-faith":  ("Sermon Series/LbF Loop Title.mp4", 1280, 1800, False, 2),
     "pbc-more-grace":     ("Sermon Series/More Grace Title Loop.mp4", 1280, 1800, False, 2),
 }
