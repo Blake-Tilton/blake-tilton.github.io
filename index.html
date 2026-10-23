@@ -1,679 +1,339 @@
-<!DOCTYPE html>
+<!doctype html>
+<!-- Generated from tools/index.src.html by tools/build.py. Edit the source, not this file. -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blake Tilton | Reliable Processes & Content-Driven Design</title>
-    
-    <!-- External Typekit Link PROVIDED BY USER -->
-    <link rel="stylesheet" href="https://use.typekit.net/bka0zmc.css">
-
-    <style>
-        /* --- CSS VARIABLES & RESET --- */
-        :root {
-            --bg-color: #3f3f3f; /* Main Background (Dark Gray) */
-            --border-color: #e5e5e5; /* Outline/Text Color (Light Gray) */
-            --content-bg: #3f3f3f; /* Background inside the content area */
-            --tab-active-bg: #3f3f3f; /* The active tab matches the body */
-
---radius-main: 4px;
-            
-            --main-font: "roc-grotesk", sans-serif; /* Fallback to Sofia Pro */
-            --header-font: "roc-grotesk-wide", sans-serif; /* Assumed header font */
-        }
-
-        /* Essential Reset for layout control */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; width: 100%; overflow-y: auto; }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--border-color);
-            font-family: var(--main-font);
-            font-weight: 300; /* Matching the body weight from mockup */
-            font-size: 16px;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            padding: 2.5% 2%; /* Overall container padding */
-        }
-
-        /* --- THE LOGO/HEADER --- */
-        header {
-            width: 100%;
-            height: 8%; /* Specific height ratio from mockup */
-            padding-bottom: 10vh;
-            
-            display: flex;
-            align-items: baseline; /* Vertically center the text and tagline */
-            margin-bottom: 2%; /* Space before the tab system */
-        }
-
-        .header-main {
-            font-family: var(--header-font);
-            font-weight: 900; /* Heavy weight from mockup */
-            font-size: clamp(2rem, 4vw, 3.5rem); /* Responsive typography */
-            text-transform: uppercase;
-            letter-spacing: -0.02em; /* Slight tracking tighten */
-            margin-right: 0.5em; /* Space before the pipeline divider */
-        }
-
-        .tagline {
-            font-family: var(--header-font);
-            font-weight: 400;
-            font-size: clamp(1rem, 2vw, 1.6rem);
-            color: var(--border-color);
-            opacity: 0.9;
-        }
-
-        /* --- THE TAB & MAIN CONTAINER SYSTEM (CSS GRID) --- */
-        /* This is the complex visual container with the built-in logic */
-        
-        .main-ui-container {
-    display: grid;
-    /* FIX: Row 1 (Tabs) is rigid. Row 2 (Content) is flexible/auto. */
-    grid-template-rows: min-content auto; 
-    align-items: start;
-    min-height: 100vh;
-    height: auto;
-    width: 100%;
-}
-        /* Hides the actual functionality (the inputs) */
-        input[name="main-tabs"] { display: none; }
-
-        /* --- THE TABS (LABELS) --- */
-        .tabs-list {
-            grid-row: 1;
-            grid-column: 1;
-            display: flex;
-            padding-left: 2%; /* Indent the start of the tabs slightly */
-Padding-bottom: 0;
-            z-index: 2; /* Tabs must sit on top of the content border */
-align-items: stretch;
-    height: auto; /* Let the labels define the height */
-    margin-bottom: 0;
-        }
-
-        .tab-label {
-            cursor: pointer;
-            padding: 2.5px 15px;
-            font-size: 1.3rem;
-            font-weight: 400;
-            text-transform: capitalize;
-            border: 1px solid var(--border-color); /* Full border default */
-            background: transparent; /* Makes the border line continuous */
-            margin-right: 8px; /* Small gap between tabs */
-            
-            border-top-left-radius: var(--radius-main);
-    border-top-right-radius: var(--radius-main);
-            
-            /* Smooth transition on hover and activation */
-            transition: background 0.3s ease, border-bottom 0.1s ease;
-        }
-
-        .tab-label:hover { background: rgba(141, 144, 145, 0.1); }
-
-        /* --- THE CONTENT PANEL (The actual 'Container') --- */
-        .content-panel {
-    grid-row: 2;
-    grid-column: 1;
-    background-color: var(--content-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-main);
-    margin-top: -1px;
-    z-index: 1;
-    padding: 3% 4%;
-    min-height: 500px; /* ADD THIS: Gives the border a physical shape even if empty */
-    height: auto;
-    overflow: visible; /* Keeps things tidy */
-display: block; 
-    overflow: visible; 
-}
-        /* --- TAB INTERACTION LOGIC (The CSS-Only Part) --- */
-        
-        /* 1. When a radio button is checked: */
-        
-        /* Style the corresponding label to merge with the panel */
-        input[id="tab-home"]:checked ~ .tabs-list .label-home,
-        input[id="tab-work"]:checked ~ .tabs-list .label-work,
-        input[id="tab-personal"]:checked ~ .tabs-list .label-personal {
-            background-color: var(--tab-active-bg);
-            border-bottom: 2px solid var(--tab-active-bg); /* The core visual merge trick */
-            font-weight: 700;
-            transform: translateY(1px); /* Essential for a pixel-perfect merge */
-        }
-
-       /* 1. Default: Hide all content */
-.tab-content { 
-    display: none !important; 
-}
-
-/* 2. The Master Switch: Connect Radios to IDs */
-#tab-home:checked ~ .content-panel #home {
-    display: flex !important; /* Flex for your dual-panel layout */
-}
-
-#tab-work:checked ~ .content-panel #work {
-    display: block !important;
-}
-
-#tab-personal:checked ~ .content-panel #personal {
-    display: block !important;
-}
-
-/* 3. Internal Work/Personal Project Details */
-/* This handles showing the specific project detail when the internal radio is clicked */
-#tab-work:checked ~ .content-panel #w1-trigger:checked ~ .tab-content-grid #detail-w1,
-#tab-work:checked ~ .content-panel #w2-trigger:checked ~ .tab-content-grid #detail-w2,
-#tab-personal:checked ~ .content-panel #p1-trigger:checked ~ .tab-content-grid #detail-p1 {
-    display: block !important;
-}
-
-        /* --- CONTENT INTERIORS (SPECIFIC PAGE LAYOUTS) --- */
-        
-        /* The dual rounded rectangular panels (Flexbox layout) */
-        .content-panel-layout {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-            height: 100%;
-            width: 100%;
-            gap: 2%; /* Gap between the two panels */
-        }
-
-        /* Standard styling for the interior rounded rectangles */
-        .interior-panel {
-            flex: 1; /* Takes equal width */
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-main);
-            padding: 2% 3% 5% 3%; /* Top/Side/Bottom/Side padding */
-            overflow-y: auto; /* Allow content to scroll inside these boxes if needed */
-        }
-
-        /* Content Title Styling */
-        .panel-title {
-    font-family: var(--header-font); /* Changed from default to your wide font */
-    font-weight: 700;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: var(--border-color);
-    text-transform: uppercase; /* Optional: adds to that "operating system" look */
-}
-
-        /* --- SPECIFIC COLUMN TWEAKS --- */
-
-        /* Right Column: "My Story" (Flexbox for fine-tuning text alignment) */
-        .content-home .panel-right {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* Aligns text top-justified */
-            font-size: 0.95rem; /* Small font size from mockup */
-            font-weight: 300;
-            opacity: 0.9;
-        }
-
-        .content-home .panel-right p { margin-bottom: 1.2rem; }
-
-        /* Left Column: "My Pillars" (Vertical list) */
-        .pillar-item {
-            margin-bottom: 1.5rem;
-        }
-
-        .pillar-title {
-    font-family: var(--header-font); /* Updates to Roc Grotesk Wide */
-    font-weight: 700;
-    font-size: 1.1rem; /* Slightly smaller than the main panel title */
-    text-transform: uppercase;
-    letter-spacing: 0.05em; /* Adds professional tracking to wide fonts */
-    color: var(--border-color);
-}
-
-        .pillar-description {
-            font-weight: 300;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 0.1em;
-        }
-
-/* Layout Grid */
-.tab-content-grid {
-    display: flex;
-    gap: 20px;
-    align-items: stretch; /* Ensures columns stay same height */
-    height: auto;
-    min-height: 60vh;
-overflow: visible;
-}
-
-.overview-column { flex: 1; } /* Narrower left side */
-.detail-column { flex: 2; }   /* Wider right side for media */
-
-/* Project Cards */
-.project-card {
-    display: block;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-main);
-    padding: 15px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.project-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Flexible Media System */
-/* Ensure media blocks are visible and functional */
-.media-block {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05); /* The dark gray fill */
-    border: 1px solid var(--border-color); /* The white outline from mockup */
-    border-radius: var(--radius-main);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    min-height: 200px; /* Ensures they don't collapse if empty */
-    color: var(--border-color);
-}
-
-.video-placeholder {
-    aspect-ratio: 16 / 9;
-}
-
-.image-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    align-items: stretch; /* Forces both blocks to the same height */
-}
-
-.image-grid .media-block {
-    min-height: 200px; /* Smaller height for grid items */
-}
-
-/* RE-SYNC THE SWITCHES */
-/* If a Work radio is checked, show only the corresponding Work detail */
-#w1-trigger:checked ~ .tab-content-grid #detail-w1,
-#w2-trigger:checked ~ .tab-content-grid #detail-w2,
-#p1-trigger:checked ~ .tab-content-grid #detail-p1,
-#p2-trigger:checked ~ .tab-content-grid #detail-p2 { 
-    display: block !important; 
-}
-/* Vertical Extension */
-.interior-panel {
-    height: fit-content;
-    height: auto;
-}
-
-/* 1. System Logic: Hide triggers and inactive panels */
-.state-trigger {
-    display: none;
-}
-
-.project-detail {
-    display: none;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-/* 2. The "Switch" Logic */
-/* Work Tab Logic */
-/* --- WORK LOGIC --- */
-#w1-trigger:checked ~ .tab-content-grid #detail-w1 { display: block; }
-#w2-trigger:checked ~ .tab-content-grid #detail-w2 { display: block; }
-#w3-trigger:checked ~ .tab-content-grid #detail-w3 { display: block; }
-
-#w1-trigger:checked ~ .tab-content-grid label[for="w1-trigger"],
-#w2-trigger:checked ~ .tab-content-grid label[for="w2-trigger"],
-#w3-trigger:checked ~ .tab-content-grid label[for="w3-trigger"] {
-    border-color: var(--border-color);
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* --- PERSONAL LOGIC --- */
-#p1-trigger:checked ~ .tab-content-grid #detail-p1 { display: block; }
-#p2-trigger:checked ~ .tab-content-grid #detail-p2 { display: block; }
-
-#p1-trigger:checked ~ .tab-content-grid label[for="p1-trigger"],
-#p2-trigger:checked ~ .tab-content-grid label[for="p2-trigger"] {
-    border-color: var(--border-color);
-    background: rgba(255, 255, 255, 0.1);
-}
-/* 4. Layout Grid */
-.tab-content-grid {
-    display: flex;
-    gap: 20px;
-    align-items: stretch; /* Matches image_0bd8a5.png: columns stay synced */
-    margin-top: 10px;
-}
-
-.overview-column { flex: 1; min-width: 0px; }
-.detail-column { flex: 2; }
-
-/* 5. Content Blocks */
-.project-card {
-    display: block;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: var(--radius-main);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-/* Base styles stay the same */
-.media-block {
-    width: 100%; /* Fill the container width */
-    height: auto; /* Let the aspect ratio determine height */
-    aspect-ratio: 16 / 9; /* Standard video ratio */
-    background-color: #333;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    object-fit: cover; /* Ensures actual images fill the space without distortion */
-}
-
-/* Specific size for smaller image placeholders */
-.media-sm {
-    aspect-ratio: 4 / 3; 
-}
-/* Size Variants */
-.media-sm { min-height: 150px; }
-.media-md { min-height: 300px; }
-.media-lg { min-height: 500px; }
-.media-full { aspect-ratio: 16 / 9; } /* Best for your video infrastructure projects */
-
-.image-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-/* 6. Smooth Transition */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 768px) {
-    /* 0. GLOBAL RESET: Prevents padding from expanding width beyond 100% */
-    * {
-        box-sizing: border-box !important;
-    }
-
-    /* 1. HEADER: Allow height to grow with wrapped text */
-    header {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 15px;
-        padding-bottom: 20px !important; 
-        height: auto !important;
-    }
-
-    /* 2. HOME TAB: Stack the My Pillars and My Story panels */
-    .content-panel-layout {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 20px;
-    }
-
-    /* 3. TABS: Keep the 'Seal' tight regardless of header height */
-    .tabs-list {
-        display: flex !important;
-        padding-left: 20px;
-        margin-bottom: -1px; 
-        position: relative;
-        z-index: 10;
-        width: 100%;
-        overflow-x: auto; /* Allow horizontal swipe if tabs wrap */
-    }
-
-    .tab-label {
-        padding: 8px 15px;
-        font-size: 1.1rem;
-        margin-right: 4px;
-    }
-
-    /* 4. WORK & PERSONAL GRIDS: Universal stacking and width containment */
-    .tab-content-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 30px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        overflow-x: hidden !important; /* Prevents project divs from horizontal scrolling */
-    }
-
-    .overview-column {
-        min-width: 0 !important; /* Forces the column to respect the 100% width rule */
-        width: 100% !important;
-        flex: none !important;
-    }
-    /* 5. MEDIA: Constrain proportions and ensure width stays in bounds */
-    .media-block {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        aspect-ratio: 16 / 9 !important; 
-        object-fit: cover;
-    }
-
-    /* 6. MAIN UI: Ensure rows accommodate stacked content height and fit screen */
-    .main-ui-container {
-        grid-template-rows: auto auto !important;
-        height: auto !important;
-        min-height: 100vh;
-        align-items: start !important;
-        width: 100% !important;
-        max-width: 100vw !important;
-        overflow-x: hidden !important;
-    }
-
-    /* 7. SAFETY: Ensure triggers don't add invisible vertical space */
-    input[name="main-tabs"],
-    input[name="work-toggle"],
-    input[name="personal-toggle"],
-    .state-trigger {
-        display: none !important;
-        position: absolute;
-    }
-/* 1. RESET MIN-HEIGHT: Let the phone width dictate the height instead */
-    .media-sm, 
-    .media-md, 
-    .media-lg, 
-    .media-block {
-        min-height: 0 !important; 
-        height: auto !important;
-        width: 100% !important;
-        aspect-ratio: 16 / 9 !important; /* Keep the consistent 1970s/80s cinematic feel */
-    }
-
-    /* 2. FIX THE GRID: Stack your image-grid so they don't fight for horizontal space */
-    .image-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 15px;
-    }
-.pillar-title, .panel-title {
-        white-space: normal !important;
-        overflow-wrap: break-word !important;
-    }
-}
-p {
-    margin-top: 0;
-    margin-bottom: 1.5rem; /* Adjust this value (1.5rem to 2rem) for more or less space */
-    line-height: 1.6;      /* Improves readability for your story */
-}
-
-/* Optional: Remove the margin from the very last paragraph so it doesn't add extra space at the bottom of the container */
-p:last-child {
-    margin-bottom: 0;
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blake Tilton — Systems &amp; People · Media &amp; Design</title>
+<meta name="description" content="Blake Tilton builds technology systems, media teams, and design for schools and churches. Instructional Systems &amp; Implementation Administrator at Community ISD; Media &amp; Technology Director at Paradise Baptist Church.">
+<meta property="og:title" content="Blake Tilton">
+<meta property="og:description" content="Systems &amp; People · Media &amp; Design">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blake-tilton.github.io/">
+<meta property="og:image" content="https://blake-tilton.github.io/assets/img/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#3f3f3f">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://use.typekit.net/bka0zmc.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 
-    <!-- SECTION 1: HEADER -->
-    <header>
-        <div class="header-main">Blake Tilton</div>
-        <div class="tagline">Reliable Processes | Content-Driven Design</div>
-    </header>
+<header class="masthead">
+  <h1 class="name"><a href="#/home">Blake Tilton</a></h1>
+  <p class="tagline">Systems &amp; People <span aria-hidden="true">·</span> Media &amp; Design</p>
+</header>
 
-    <!-- SECTION 2: MAIN UI CONTAINER (GRID BASED) -->
-    <main class="main-ui-container">
+<main class="ui">
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="#/home" data-tab="home">Home</a>
+    <a class="tab" href="#/education" data-tab="education">Education</a>
+    <a class="tab" href="#/church" data-tab="church">Church</a>
+    <a class="tab" href="#/personal" data-tab="personal">Personal</a>
+  </nav>
 
-        <!-- Functional (hidden) Inputs -->
-        <input type="radio" id="tab-home" name="main-tabs" checked>
-        <input type="radio" id="tab-work" name="main-tabs">
-        <input type="radio" id="tab-personal" name="main-tabs">
+  <div class="panel">
 
-        <!-- Visual Tabs (Labels) -->
-        <nav class="tabs-list">
-            <label for="tab-home" class="tab-label label-home">Home</label>
-            <label for="tab-work" class="tab-label label-work">Work</label>
-            <label for="tab-personal" class="tab-label label-personal">Personal</label>
+    <!-- ============================== HOME -->
+    <section class="view" data-view="home" aria-label="Home">
+      <div class="split">
+        <div class="box now">
+          <h2 class="box-title">Now</h2>
+          <img src="assets/img/headshot-240.webp" srcset="assets/img/headshot-240.webp 240w, assets/img/headshot-480.webp 480w" sizes="160px" width="576" height="576" alt="Blake Tilton" class="headshot" fetchpriority="high" decoding="async">
+          <dl class="roles">
+            <div>
+              <dt>Instructional Systems &amp; Implementation Administrator</dt>
+              <dd>Community ISD</dd>
+            </div>
+            <div>
+              <dt>Media &amp; Technology Director</dt>
+              <dd>Paradise Baptist Church</dd>
+            </div>
+          </dl>
+          <p class="aside">On the side: freelance design and contract IT work.</p>
+          <button class="btn" type="button" data-open-contact>Contact</button>
+        </div>
+
+        <div class="box story">
+          <h2 class="box-title">Story</h2>
+          <p>I started in church media, running whatever needed running on Sunday morning. Then I taught — art first, then video — and kept ending up with student crews doing work nobody expected from them.</p>
+          <p>Somewhere along the way, building the crew became the job.</p>
+          <p>Now I design how technology works for a school district, and I still run media for a church. Same work, different stakes. Set it up right, train the people, and it keeps going after I leave the room.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== EDUCATION -->
+    <section class="view" data-view="education" aria-label="Education">
+      <div class="split split-work">
+        <nav class="box overview" aria-label="Education projects">
+          <h2 class="box-title">Education</h2>
+          <a class="card" href="#/education/instructional-systems" data-project="instructional-systems">
+            <span class="card-title">Instructional Systems</span>
+            <span class="card-line">Making district technology land.</span>
+          </a>
+          <a class="card" href="#/education/student-tech" data-project="student-tech">
+            <span class="card-title">Student Tech Program</span>
+            <span class="card-line">Same idea, four districts.</span>
+          </a>
         </nav>
 
-        <!-- SECTION 3: THE CONTENT PANEL (The Continuous Border) -->
-        <div class="content-panel">
+        <div class="box detail">
+          <article class="project" data-project="instructional-systems">
+            <h2 class="project-title">Instructional Systems &amp; Implementation</h2>
+            <p class="spec"><span>Community ISD</span> · <span>July 2026–Present</span> · <span>IT Department</span></p>
+            <p>I design how technology gets rolled out across the district, and work with the departments on the other end so it actually sticks.</p>
+            <p>It’s early. Here’s what’s on the table:</p>
+            <ul class="list">
+              <li>Device standards and refresh cycles</li>
+              <li>A redesign of the tech facilities</li>
+              <li>A department dashboard tying together projects, inventory, tickets, and accountability</li>
+              <li>A department rebrand, because someone asked the guy who used to teach design</li>
+            </ul>
+            <div class="media-slot" aria-hidden="true">Diagrams in progress</div>
+          </article>
 
-            <!-- HOME CONTENT (MATCHING MOCKUP) -->
-            <div id="home" class="tab-content"> <!-- Added id="home" -->
-        <div class="content-panel-layout">
-                    
-                    <!-- Left Panel: Pillars -->
-                    <div class="interior-panel panel-left">
-                        <div class="panel-title">My Pillars</div>
+          <article class="project" data-project="student-tech">
+            <h2 class="project-title">The Student Tech Program</h2>
+            <p class="spec"><span>Forney</span> · <span>Royse City</span> · <span>Community</span> · <span>Mesquite</span> · <span>2013–2026</span></p>
+            <figure class="vid"><video controls playsinline preload="none" poster="assets/img/st-av-reel-2425-poster-1600.webp" width="1920" height="1080" aria-label="Community ISD A/V reel, 2024–25"><source src="assets/video/st-av-reel-2425.mp4" type="video/mp4"></video><figcaption>Community ISD A/V reel, 2024–25 <span>43.9 MB</span></figcaption></figure>
+            <p class="lede">Give students real work, a clear process, and someone who takes them seriously. They’ll surprise you. I’ve built that crew four times.</p>
 
-                        <div class="pillar-item">
-                            <div class="pillar-title">SOLID FRAMEWORK</div>
-                            <div class="pillar-description">Reliable technology systems & processes deliver repeatable excellence.</div>
-                        </div>
+            <h3 class="slug">Forney ISD — 6th Grade <span>2013–2020</span></h3>
+            <p>Asked to pilot a student media team. Won a grant to fund it. COVID ended it early.</p>
 
-                        <div class="pillar-item">
-                            <div class="pillar-title">CONTENT-DRIVEN</div>
-                            <div class="pillar-description">All design decisions are informed decisions and serve a clear objective.</div>
-                        </div>
+            <h3 class="slug">Royse City ISD — Summers Middle School <span>2020–2023</span></h3>
+            <p>A new campus, so the A/V program started from nothing. Within two years, 7th and 8th graders covered every media need on campus — and were out-producing the high school.</p>
+            <figure class="vid"><video controls playsinline preload="none" poster="assets/img/st-showcase-2023-poster-1600.webp" width="1920" height="1080" aria-label="Student work showcase, 2023"><source src="assets/video/st-showcase-2023.mp4" type="video/mp4"></video><figcaption>Student work showcase, 2023 <span>50.0 MB</span></figcaption></figure>
 
-                        <div class="pillar-item">
-                            <div class="pillar-title">MENTORSHIP</div>
-                            <div class="pillar-description">Scaling requires talent development.</div>
-                        </div>
-
-                        <div class="pillar-item">
-                            <div class="pillar-title">USER EXPERIENCE</div>
-                            <div class="pillar-description">Seamless interactions that resonate.</div>
-                        </div>
-                    </div>
-
-                    <!-- Right Panel: Story -->
-                    <div class="interior-panel panel-right">
-                        <div class="panel-title">My Story</div>
-<p>I started young, sketching characters, building structures out of cards, blocks, and Legos. Then, with video, worlds came to life.</p>
-<p>That was my playground.</p>
-<p>I didn't know it then, but I was looking for the intersection of creativity and function.</p>
-<p>The venues changed. Indie-film sets, church media booths, classrooms. But the problem was always the same: Ideas, talent, and tools were juggled, hoping for the best. I learned that a high-quality experience isn't a fluke; it's the result of a calibrated environment.</p>
-<p>Now, I don’t just build the thing. I build the systems that make the things.</p>
-<p>That means establishing the infrastructure, defining the processes, and most importantly, training the people.</p>
-<p>I design the process. I build the team. The deliverables function. The audience responds.</p>
-                    </div>
-
-                </div>
+            <h3 class="slug">Community ISD — High School + District Communications <span>2023–2025</span></h3>
+            <p>They hired me away over my objections. Split role: teacher, district communications, some IT. The interns became the district’s video crew — sports, promos, a series with the superintendent. 102,000 views in two years.</p>
+            <div class="grid-2">
+              <figure class="vid"><video controls playsinline preload="none" poster="assets/img/st-bn-sting-poster-1600.webp" width="1920" height="1080" aria-label="Community Braves Network sting"><source src="assets/video/st-bn-sting.mp4" type="video/mp4"></video><figcaption>Community Braves Network sting <span>0.7 MB</span></figcaption></figure>
+              <figure class="vid"><video controls playsinline preload="none" poster="assets/img/st-sports-package-poster-1600.webp" width="1920" height="1080" aria-label="Sports package graphics"><source src="assets/video/st-sports-package.mp4" type="video/mp4"></video><figcaption>Sports package graphics <span>3.4 MB</span></figcaption></figure>
+              <img src="assets/img/st-fb-camera-800.webp" srcset="assets/img/st-fb-camera-800.webp 800w, assets/img/st-fb-camera-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="4032" height="3024" alt="Student camera operator filming a Friday night football game" loading="lazy" decoding="async">
+              <img src="assets/img/st-bn-guide-800.webp" srcset="assets/img/st-bn-guide-800.webp 800w, assets/img/st-bn-guide-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1600" height="2070" alt="Community Braves Network brand guide cover" loading="lazy" decoding="async">
             </div>
 
-            <!-- WORK TAB -->
-<div id="work" class="tab-content">
-    <!-- Unique Work State Managers -->
-    <input type="radio" name="work-toggle" id="w1-trigger" class="state-trigger" checked>
-    <input type="radio" name="work-toggle" id="w2-trigger" class="state-trigger">
-    <input type="radio" name="work-toggle" id="w3-trigger" class="state-trigger">
+            <h3 class="slug">Mesquite ISD — Student Tech <span>2025–2026</span></h3>
+            <p>Came on for instructional tech. Got asked to pilot a student team that repairs student devices. Before the first year was out, the district created a position to take it district-wide.</p>
 
-    <div class="tab-content-grid">
-        <div class="interior-panel overview-column">
-            <div class="panel-title">Overview</div>
-            <label class="project-card" for="w1-trigger">
-                <div class="pillar-title">Work Project 1</div>
-                <div class="pillar-description">Lorem Ipsum</div>
-            </label>
-            <label class="project-card" for="w2-trigger">
-                <div class="pillar-title">Work Project 2</div>
-                <div class="pillar-description">Lorem Ipsum</div>
-            </label>
-            <label class="project-card" for="w3-trigger">
-                <div class="pillar-title">Work Project 3</div>
-                <div class="pillar-description">Lorem Ipsum</div>
-            </label>
+            <h3 class="slug">The part that matters</h3>
+            <p>Several of those students walked into industry jobs straight out of high school. A few of them work for me.</p>
+
+            <h3 class="slug">How it works</h3>
+            <p>A facilitator who speaks both tech and instruction. A small group of students chosen for aptitude and attitude. An IT department that trusts them with real tickets. The result: devices back in class faster, and students leaving with work experience instead of a worksheet.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CHURCH -->
+    <section class="view" data-view="church" aria-label="Church">
+      <div class="split split-work">
+        <nav class="box overview" aria-label="Church projects">
+          <h2 class="box-title">Church</h2>
+          <a class="card" href="#/church/paradise" data-project="paradise">
+            <span class="card-title">Paradise Baptist</span>
+            <span class="card-line">Every Sunday ships.</span>
+          </a>
+          <a class="card" href="#/church/new-liberty" data-project="new-liberty">
+            <span class="card-title">New Liberty</span>
+            <span class="card-line">One look instead of five.</span>
+          </a>
+          <a class="card" href="#/church/events" data-project="events">
+            <span class="card-title">Church Events</span>
+            <span class="card-line">Camps and VBS. A new world every summer.</span>
+          </a>
+        </nav>
+
+        <div class="box detail">
+          <article class="project" data-project="paradise">
+            <h2 class="project-title">Paradise Baptist Church</h2>
+            <p class="spec"><span>Media &amp; Technology Director</span> · <span>2020–Present</span> · <span>X32 / Dante</span> · <span>ProPresenter 7</span> · <span>Fiber</span></p>
+            <img src="assets/img/pbc-booth-800.webp" srcset="assets/img/pbc-booth-800.webp 800w, assets/img/pbc-booth-1600.webp 1600w" sizes="(min-width: 900px) 55vw, 100vw" width="4032" height="3024" alt="The Paradise Baptist media booth during a service" class="wide" loading="lazy" decoding="async">
+            <p>A church planted in 1904, with a tech setup that felt about that old. I rebuilt it: fiber internet, digital audio, ProPresenter running the cues for sound, video, and lights. Sunday stopped being a gamble.</p>
+            <p>Then the part that never stops — a new series every few weeks, title loops, announcements, and a brand to hold it all together. A small volunteer team runs it. I’m now designing the systems for a new building.</p>
+            <h3 class="slug">Series titles</h3>
+            <div class="grid-2">
+              <figure class="vid vid-loop"><video data-loop muted loop playsinline preload="none" poster="assets/img/pbc-easter-24-poster-1280.webp" width="1280" height="720" aria-label="Easter 2024 title loop"><source src="assets/video/pbc-easter-24.mp4" type="video/mp4"></video></figure>
+              <figure class="vid vid-loop"><video data-loop muted loop playsinline preload="none" poster="assets/img/pbc-live-by-faith-poster-1280.webp" width="1280" height="720" aria-label="Live by Faith title loop"><source src="assets/video/pbc-live-by-faith.mp4" type="video/mp4"></video></figure>
+              <figure class="vid vid-loop"><video data-loop muted loop playsinline preload="none" poster="assets/img/pbc-his-mercy-poster-1280.webp" width="1280" height="720" aria-label="His Mercy title loop"><source src="assets/video/pbc-his-mercy.mp4" type="video/mp4"></video></figure>
+              <figure class="vid vid-loop"><video data-loop muted loop playsinline preload="none" poster="assets/img/pbc-more-grace-poster-1280.webp" width="1280" height="720" aria-label="More Grace title loop"><source src="assets/video/pbc-more-grace.mp4" type="video/mp4"></video></figure>
+              <img src="assets/img/pbc-to-be-continued-800.webp" srcset="assets/img/pbc-to-be-continued-800.webp 800w, assets/img/pbc-to-be-continued-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1080" alt="To Be Continued sermon series title" loading="lazy" decoding="async">
+              <img src="assets/img/pbc-new-beginnings-800.webp" srcset="assets/img/pbc-new-beginnings-800.webp 800w, assets/img/pbc-new-beginnings-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1080" alt="New Beginnings sermon series title" loading="lazy" decoding="async">
+              <img src="assets/img/pbc-grab-a-corner-800.webp" srcset="assets/img/pbc-grab-a-corner-800.webp 800w, assets/img/pbc-grab-a-corner-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1080" alt="Grab a Corner sermon series title" loading="lazy" decoding="async">
+              <img src="assets/img/pbc-membership-800.webp" srcset="assets/img/pbc-membership-800.webp 800w, assets/img/pbc-membership-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1080" alt="Membership Matters sermon series title" loading="lazy" decoding="async">
+              <img src="assets/img/pbc-palm-sunday-800.webp" srcset="assets/img/pbc-palm-sunday-800.webp 800w, assets/img/pbc-palm-sunday-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1080" alt="What Will Your Story Be? Palm Sunday title" loading="lazy" decoding="async">
+              <img src="assets/img/pbc-first-christmas-800.webp" srcset="assets/img/pbc-first-christmas-800.webp 800w, assets/img/pbc-first-christmas-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1080" alt="#FirstChristmas series graphic" loading="lazy" decoding="async">
+            </div>
+            <h3 class="slug">Identity</h3>
+            <div class="grid-2">
+              <img src="assets/img/pbc-logo-800.webp" srcset="assets/img/pbc-logo-800.webp 800w, assets/img/pbc-logo-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="2400" height="3450" alt="Paradise Baptist Church logo" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project" data-project="new-liberty">
+            <h2 class="project-title">New Liberty Baptist Church</h2>
+            <p class="spec"><span>Communications</span> · <span>Graphics</span> · <span>Media</span> · <span>Tech</span> · <span>2008–2011, 2013–2020</span></p>
+            <img src="assets/img/nl-join-us-800.webp" srcset="assets/img/nl-join-us-800.webp 800w, assets/img/nl-join-us-1600.webp 1600w" sizes="(min-width: 900px) 55vw, 100vw" width="3840" height="2880" alt="New Liberty business card and Join Us invitation card" class="wide" loading="lazy" decoding="async">
+            <p>Where I started. Over about ten years I ran communications, graphics, media, and tech, part staff and part volunteer. The biggest job was getting everything to look like one church: logo, cards, signage, connection cards, even the cups. Plus the master plan presentation for a new campus.</p>
+            <div class="grid-2">
+              <img src="assets/img/nl-kids-wall-800.webp" srcset="assets/img/nl-kids-wall-800.webp 800w, assets/img/nl-kids-wall-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1920" alt="NL Kids logo painted on a classroom wall" loading="lazy" decoding="async">
+              <img src="assets/img/nl-cards-800.webp" srcset="assets/img/nl-cards-800.webp 800w, assets/img/nl-cards-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="1920" alt="Stack of New Liberty cards" loading="lazy" decoding="async">
+              <img src="assets/img/nl-connect-800.webp" srcset="assets/img/nl-connect-800.webp 800w, assets/img/nl-connect-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="2560" alt="Welcome and connection cards" loading="lazy" decoding="async">
+              <img src="assets/img/nl-next-step-800.webp" srcset="assets/img/nl-next-step-800.webp 800w, assets/img/nl-next-step-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="2560" alt="Take the Next Step response card" loading="lazy" decoding="async">
+              <img src="assets/img/nl-cup-800.webp" srcset="assets/img/nl-cup-800.webp 800w, assets/img/nl-cup-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="2560" alt="Branded New Liberty cup" loading="lazy" decoding="async">
+              <img src="assets/img/nl-master-plan-800.webp" srcset="assets/img/nl-master-plan-800.webp 800w, assets/img/nl-master-plan-1600.webp 1600w" sizes="(min-width: 900px) 28vw, 100vw" width="1920" height="2560" alt="Master plan presentation cover" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project" data-project="events">
+            <h2 class="project-title">Church Events</h2>
+            <p class="spec"><span>Identity</span> · <span>Illustration</span> · <span>Apparel</span> · <span>Print</span></p>
+            <img src="assets/img/ev-game-on-800.webp" srcset="assets/img/ev-game-on-800.webp 800w, assets/img/ev-game-on-1600.webp 1600w" sizes="(min-width: 900px) 55vw, 100vw" width="1920" height="1542" alt="Game On vacation Bible school logo, 2015" class="wide" loading="lazy" decoding="async">
+            <p>Every summer, a new event with its own name, its own look, and a few hundred kids wearing it. Logo, characters, shirts, signage, stage.</p>
+            <div class="grid-2">
+              <img src="assets/img/ev-trust-800.webp" srcset="assets/img/ev-trust-800.webp 800w, assets/img/ev-trust-1200.webp 1200w" sizes="(min-width: 900px) 28vw, 100vw" width="1200" height="1200" alt="Trust kids camp logo" loading="lazy" decoding="async">
+              <img src="assets/img/ev-chosen-800.webp" srcset="assets/img/ev-chosen-800.webp 800w, assets/img/ev-chosen-1200.webp 1200w" sizes="(min-width: 900px) 28vw, 100vw" width="1200" height="1200" alt="Chosen camp logo, shirt and print" loading="lazy" decoding="async">
+              <img src="assets/img/ev-treasure-800.webp" srcset="assets/img/ev-treasure-800.webp 800w, assets/img/ev-treasure-1200.webp 1200w" sizes="(min-width: 900px) 28vw, 100vw" width="1200" height="1200" alt="Treasure camp shirts and Captain Ron character" loading="lazy" decoding="async">
+              <img src="assets/img/ev-camp-wannabe-800.webp" srcset="assets/img/ev-camp-wannabe-800.webp 800w, assets/img/ev-camp-wannabe-1200.webp 1200w" sizes="(min-width: 900px) 28vw, 100vw" width="1200" height="1200" alt="Camp Wannabe shirt and Ranger Sam character" loading="lazy" decoding="async">
+              <img src="assets/img/ev-faith-800.webp" srcset="assets/img/ev-faith-800.webp 800w, assets/img/ev-faith-1200.webp 1200w" sizes="(min-width: 900px) 28vw, 100vw" width="1200" height="1200" alt="Faith camp print, shirt and stage" loading="lazy" decoding="async">
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PERSONAL -->
+    <section class="view" data-view="personal" aria-label="Personal">
+      <div class="box gallery-box">
+        <div class="gallery-head">
+          <h2 class="box-title">Personal</h2>
+          <div class="chips" role="group" aria-label="Filter">
+            <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="chip" type="button" data-filter="illustration" aria-pressed="false">Illustration</button>
+            <button class="chip" type="button" data-filter="design" aria-pressed="false">Design</button>
+            <button class="chip" type="button" data-filter="woodwork" aria-pressed="false">Woodwork</button>
+          </div>
         </div>
 
-        <div class="interior-panel detail-column">
-            <div class="project-detail" id="detail-w1">
-                <div class="panel-title">Work Project 1</div>
-                <div class="media-block media-full">Video Content Placeholder</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
-            </div>
-            <div class="project-detail" id="detail-w2">
-                <div class="panel-title">Work Project 2</div>
-                <div class="media-block md">Image Placeholder</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
-            </div>
-            <div class="project-detail" id="detail-w3">
-                <div class="panel-title">Work Project 3</div>
-                <div class="media-block media-lg">Image Placeholder</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis non libero volutpat, euismod risus quis, facilisis purus.</p>
-                <div class="media-block media-sm">Image Placeholder</div>
-            </div>
-        </div>
-    </div> <!-- Grid closes AFTER both columns -->
-</div> <!-- Closes Work Tab -->
+        <ul class="gallery">
+          <li class="tile tile-feature" data-cat="woodwork">
+            <a href="assets/img/p-lounge-chair-2000.webp" data-caption="Lounge Chair 103 — Designed it, drew it, built it. Base and upholstery outsourced." data-set="lounge-chair">
+              <img src="assets/img/p-lounge-chair-800.webp" srcset="assets/img/p-lounge-chair-800.webp 800w, assets/img/p-lounge-chair-1200.webp 1200w, assets/img/p-lounge-chair-2000.webp 2000w" sizes="(min-width: 900px) 45vw, 100vw" width="5100" height="3300" alt="Lounge Chair 103 spec sheet: photo, drawings and notes" loading="lazy" decoding="async">
+              <span class="tile-cap">Lounge Chair 103</span>
+            </a>
+          </li>
+          <li class="tile tile-top" data-cat="illustration">
+            <a href="assets/img/p-baringer-405-2000.webp" data-caption="Baringer 405 — A 1970s muscle car ad for a car company that never existed.">
+              <img src="assets/img/p-baringer-405-800.webp" srcset="assets/img/p-baringer-405-800.webp 800w, assets/img/p-baringer-405-1200.webp 1200w, assets/img/p-baringer-405-2000.webp 2000w" sizes="(min-width: 900px) 22vw, 50vw" width="3075" height="3975" alt="Vintage-style ad for the Baringer 405 muscle car" loading="lazy" decoding="async">
+              <span class="tile-cap">Baringer 405</span>
+            </a>
+          </li>
+          <li class="tile tile-series" data-cat="illustration">
+            <a href="assets/img/ff-2025-vampire-1080.webp" data-caption="Fright Fall — RetroSupply’s October challenge. I’ve done it every year since 2022." data-set="fright-fall">
+              <img src="assets/img/ff-2025-vampire-800.webp" srcset="assets/img/ff-2025-vampire-800.webp 800w, assets/img/ff-2025-vampire-1080.webp 1080w" sizes="(min-width: 900px) 22vw, 50vw" width="1080" height="1080" alt="Vampire silhouette, Fright Fall 2025" loading="lazy" decoding="async">
+              <span class="tile-cap">Fright Fall <span class="tile-count">6</span></span>
+            </a>
+          </li>
+          <li class="tile" data-cat="illustration">
+            <a href="assets/img/p-wolfman-2000.webp" data-caption="Wolf Man — Ballpoint pen, colored digitally.">
+              <img src="assets/img/p-wolfman-800.webp" srcset="assets/img/p-wolfman-800.webp 800w, assets/img/p-wolfman-1200.webp 1200w, assets/img/p-wolfman-2000.webp 2000w" sizes="(min-width: 900px) 22vw, 50vw" width="4032" height="3024" alt="Wolf Man in ballpoint pen with digital color" loading="lazy" decoding="async">
+              <span class="tile-cap">Wolf Man</span>
+            </a>
+          </li>
+          <li class="tile" data-cat="illustration">
+            <a href="assets/img/p-santa-2000.webp" data-caption="Santa, 2024">
+              <img src="assets/img/p-santa-800.webp" srcset="assets/img/p-santa-800.webp 800w, assets/img/p-santa-1200.webp 1200w, assets/img/p-santa-2000.webp 2000w" sizes="(min-width: 900px) 22vw, 50vw" width="4817" height="6395" alt="Santa with a sack of gifts and a mug" loading="lazy" decoding="async">
+              <span class="tile-cap">Santa</span>
+            </a>
+          </li>
+          <li class="tile tile-wide" data-cat="design">
+            <a href="assets/img/p-galahad-2000.webp" data-caption="Galahad — Logo.">
+              <img src="assets/img/p-galahad-800.webp" srcset="assets/img/p-galahad-800.webp 800w, assets/img/p-galahad-1200.webp 1200w, assets/img/p-galahad-2000.webp 2000w" sizes="(min-width: 900px) 45vw, 100vw" width="8000" height="4500" alt="Galahad logo in red and white" loading="lazy" decoding="async">
+              <span class="tile-cap">Galahad</span>
+            </a>
+          </li>
+          <li class="tile tile-wide" data-cat="design">
+            <a href="assets/img/p-moses-1920.webp" data-caption="Moses — An ’80s-style logo.">
+              <img src="assets/img/p-moses-800.webp" srcset="assets/img/p-moses-800.webp 800w, assets/img/p-moses-1200.webp 1200w, assets/img/p-moses-1920.webp 1920w" sizes="(min-width: 900px) 45vw, 100vw" width="1920" height="1080" alt="Moses logo in 1980s style" loading="lazy" decoding="async">
+              <span class="tile-cap">Moses</span>
+            </a>
+          </li>
+          <li class="tile" data-cat="design">
+            <a href="assets/img/p-77-tee-348.webp" data-caption="’77 — T-shirt design.">
+              <img src="assets/img/p-77-tee-348.webp" srcset="assets/img/p-77-tee-348.webp 348w" sizes="(min-width: 900px) 22vw, 50vw" width="348" height="688" alt="Model wearing the ’77 t-shirt" loading="lazy" decoding="async">
+              <span class="tile-cap">’77</span>
+            </a>
+          </li>
+          <li class="tile" data-cat="illustration">
+            <a href="assets/img/p-eggshell-1156.webp" data-caption="EggShell — Digital paint.">
+              <img src="assets/img/p-eggshell-800.webp" srcset="assets/img/p-eggshell-800.webp 800w, assets/img/p-eggshell-1156.webp 1156w" sizes="(min-width: 900px) 22vw, 50vw" width="1156" height="1406" alt="Digital painting of a woman in profile" loading="lazy" decoding="async">
+              <span class="tile-cap">EggShell</span>
+            </a>
+          </li>
+        </ul>
 
-<!-- PERSONAL TAB -->
-<div id="personal" class="tab-content">
-    <!-- Unique Personal State Managers -->
-    <input type="radio" name="personal-toggle" id="p1-trigger" class="state-trigger" checked>
-    <input type="radio" name="personal-toggle" id="p2-trigger" class="state-trigger">
+        <!-- Sets: extra images opened from a tile with data-set -->
+        <ul class="set" data-set="lounge-chair" hidden>
+          <li><a href="assets/img/p-lounge-chair-2000.webp" data-caption="Lounge Chair 103 — spec sheet">Spec sheet</a></li>
+          <li><a href="assets/img/p-lounge-chair-sides-2000.webp" data-caption="Lounge Chair 103 — finished chair and side drawing">Sides</a></li>
+        </ul>
+        <ul class="set" data-set="fright-fall" hidden>
+          <li><a href="assets/img/ff-2022-tombstone-1000.webp" data-caption="Fright Fall 2022 — Tombstone">Tombstone, 2022</a></li>
+          <li><a href="assets/img/ff-2023-howl-1000.webp" data-caption="Fright Fall 2023 — Howl">Howl, 2023</a></li>
+          <li><a href="assets/img/ff-2023-mask-1000.webp" data-caption="Fright Fall 2023 — Mask">Mask, 2023</a></li>
+          <li><a href="assets/img/ff-2024-gargoyle-2000.webp" data-caption="Fright Fall 2024 — Gargoyle">Gargoyle, 2024</a></li>
+          <li><a href="assets/img/ff-2025-vampire-1080.webp" data-caption="Fright Fall 2025 — Vampire">Vampire, 2025</a></li>
+          <li><a href="assets/img/ff-2026-haunted-tape-1000.webp" data-caption="Fright Fall 2026 — Haunted Tape">Haunted Tape, 2026</a></li>
+        </ul>
+      </div>
+    </section>
 
-    <div class="tab-content-grid">
-        <div class="interior-panel overview-column">
-            <div class="panel-title">Overview</div>
-            <label class="project-card" for="p1-trigger">
-                <div class="pillar-title">Personal Project 1</div>
-                <div class="pillar-description">Lorem Ipsum</div>
-            </label>
-            <label class="project-card" for="p2-trigger">
-                <div class="pillar-title">Personal Project 2</div>
-                <div class="pillar-description">Lorem Ipsum</div>
-            </label>
-        </div>
+  </div>
+</main>
 
-        <div class="interior-panel detail-column">
-            <div class="project-detail" id="detail-p1">
-                <div class="panel-title">Personal Project 1</div>
-                <div class="media-block media-sm">Image 1 Content Placeholder</div>
-            </div>
-            <div class="project-detail" id="detail-p2">
-                <div class="panel-title">Personal Project 2</div>
-                <div class="media-block media-lg">Image 2 Content Placeholder</div>
-            </div>
-        </div>
-    </div> <!-- Closes Personal Grid -->
-</div> <!-- Closes Personal Tab -->
-    </main> <!-- /main-ui-container -->
+<footer class="foot">
+  <span>© 2026 Blake Tilton</span>
+  <button class="link" type="button" data-open-contact>Contact</button>
+</footer>
 
-<script>
-    console.log("DOM fully loaded");
-    const workTab = document.getElementById('work');
-    const personalTab = document.getElementById('personal');
-    
-    console.log("Work Tab exists:", !!workTab);
-    console.log("Personal Tab exists:", !!personalTab);
-    
-    // Check if both are active at the same time
-    if(workTab.classList.contains('active') && personalTab.classList.contains('active')) {
-        console.warn("SYSTEM ERROR: Both tabs are active. This is why content is overlapping.");
-    }
-</script>
+<!-- ============================== CONTACT -->
+<dialog class="modal" id="contact" aria-labelledby="contact-title">
+  <form class="contact-form" id="contact-form" action="https://script.google.com/macros/s/AKfycbwOA21dJPIOG0s6iKracbP59ZHoUGCj8DaKt1FcleJf37RupASmgxOF7at5SZmMlnbPtA/exec" method="post">
+    <div class="modal-head">
+      <h2 class="box-title" id="contact-title">Contact</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <label class="field"><span>Name</span><input name="name" required maxlength="200" autocomplete="name"></label>
+    <label class="field"><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+    <label class="field"><span>Message</span><textarea name="message" required maxlength="5000" rows="6"></textarea></label>
+    <label class="trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="modal-actions">
+      <p class="form-status" role="status" aria-live="polite"></p>
+      <button class="btn" type="submit">Send</button>
+    </div>
+  </form>
+</dialog>
 
+<!-- ============================== LIGHTBOX -->
+<dialog class="lightbox" id="lightbox" aria-label="Image viewer">
+  <div class="lb-frame">
+    <img class="lb-img" alt="">
+    <div class="lb-bar">
+      <p class="lb-cap"></p>
+      <div class="lb-nav">
+        <button class="icon-btn" type="button" data-lb="prev" aria-label="Previous">←</button>
+        <span class="lb-count"></span>
+        <button class="icon-btn" type="button" data-lb="next" aria-label="Next">→</button>
+        <button class="icon-btn" type="button" data-close aria-label="Close">×</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script src="assets/js/site.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,342 @@
+<!doctype html>
+<!-- SOURCE for index.html. Edit this file, then run: python3 tools/build.py
+     <x-img slug="..." alt="..." sizes="...">  -> responsive <img> from assets/media.json
+     <x-video slug="..." kind="reel|loop" label="..."> -> <video> with poster
+     {{full:slug}} -> URL of the largest version of an image -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blake Tilton — Systems &amp; People · Media &amp; Design</title>
+<meta name="description" content="Blake Tilton builds technology systems, media teams, and design for schools and churches. Instructional Systems &amp; Implementation Administrator at Community ISD; Media &amp; Technology Director at Paradise Baptist Church.">
+<meta property="og:title" content="Blake Tilton">
+<meta property="og:description" content="Systems &amp; People · Media &amp; Design">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blake-tilton.github.io/">
+<meta property="og:image" content="https://blake-tilton.github.io/assets/img/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#3f3f3f">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://use.typekit.net/bka0zmc.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<header class="masthead">
+  <h1 class="name"><a href="#/home">Blake Tilton</a></h1>
+  <p class="tagline">Systems &amp; People <span aria-hidden="true">·</span> Media &amp; Design</p>
+</header>
+
+<main class="ui">
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="#/home" data-tab="home">Home</a>
+    <a class="tab" href="#/education" data-tab="education">Education</a>
+    <a class="tab" href="#/church" data-tab="church">Church</a>
+    <a class="tab" href="#/personal" data-tab="personal">Personal</a>
+  </nav>
+
+  <div class="panel">
+
+    <!-- ============================== HOME -->
+    <section class="view" data-view="home" aria-label="Home">
+      <div class="split">
+        <div class="box now">
+          <h2 class="box-title">Now</h2>
+          <x-img slug="headshot" alt="Blake Tilton" sizes="160px" class="headshot" eager>
+          <dl class="roles">
+            <div>
+              <dt>Instructional Systems &amp; Implementation Administrator</dt>
+              <dd>Community ISD</dd>
+            </div>
+            <div>
+              <dt>Media &amp; Technology Director</dt>
+              <dd>Paradise Baptist Church</dd>
+            </div>
+          </dl>
+          <p class="aside">On the side: freelance design and contract IT work.</p>
+          <button class="btn" type="button" data-open-contact>Contact</button>
+        </div>
+
+        <div class="box story">
+          <h2 class="box-title">Story</h2>
+          <p>I started in church media, running whatever needed running on Sunday morning. Then I taught — art first, then video — and kept ending up with student crews doing work nobody expected from them.</p>
+          <p>Somewhere along the way, building the crew became the job.</p>
+          <p>Now I design how technology works for a school district, and I still run media for a church. Same work, different stakes. Set it up right, train the people, and it keeps going after I leave the room.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== EDUCATION -->
+    <section class="view" data-view="education" aria-label="Education">
+      <div class="split split-work">
+        <nav class="box overview" aria-label="Education projects">
+          <h2 class="box-title">Education</h2>
+          <a class="card" href="#/education/instructional-systems" data-project="instructional-systems">
+            <span class="card-title">Instructional Systems</span>
+            <span class="card-line">Making district technology land.</span>
+          </a>
+          <a class="card" href="#/education/student-tech" data-project="student-tech">
+            <span class="card-title">Student Tech Program</span>
+            <span class="card-line">Same idea, four districts.</span>
+          </a>
+        </nav>
+
+        <div class="box detail">
+          <article class="project" data-project="instructional-systems">
+            <h2 class="project-title">Instructional Systems &amp; Implementation</h2>
+            <p class="spec">Community ISD · July 2026–Present · IT Department</p>
+            <p>I design how technology gets rolled out across the district, and work with the departments on the other end so it actually sticks.</p>
+            <p>It’s early. Here’s what’s on the table:</p>
+            <ul class="list">
+              <li>Device standards and refresh cycles</li>
+              <li>A redesign of the tech facilities</li>
+              <li>A department dashboard tying together projects, inventory, tickets, and accountability</li>
+              <li>A department rebrand, because someone asked the guy who used to teach design</li>
+            </ul>
+            <div class="media-slot" aria-hidden="true">Diagrams in progress</div>
+          </article>
+
+          <article class="project" data-project="student-tech">
+            <h2 class="project-title">The Student Tech Program</h2>
+            <p class="spec">Forney · Royse City · Community · Mesquite · 2013–2026</p>
+            <x-video slug="st-av-reel-2425" kind="reel" label="Community ISD A/V reel, 2024–25">
+            <p class="lede">Give students real work, a clear process, and someone who takes them seriously. They’ll surprise you. I’ve built that crew four times.</p>
+
+            <h3 class="slug">Forney ISD — 6th Grade <span>2013–2020</span></h3>
+            <p>Asked to pilot a student media team. Won a grant to fund it. COVID ended it early.</p>
+
+            <h3 class="slug">Royse City ISD — Summers Middle School <span>2020–2023</span></h3>
+            <p>A new campus, so the A/V program started from nothing. Within two years, 7th and 8th graders covered every media need on campus — and were out-producing the high school.</p>
+            <x-video slug="st-showcase-2023" kind="reel" label="Student work showcase, 2023">
+
+            <h3 class="slug">Community ISD — High School + District Communications <span>2023–2025</span></h3>
+            <p>They hired me away over my objections. Split role: teacher, district communications, some IT. The interns became the district’s video crew — sports, promos, a series with the superintendent. 102,000 views in two years.</p>
+            <div class="grid-2">
+              <x-video slug="st-bn-sting" kind="reel" label="Community Braves Network sting">
+              <x-video slug="st-sports-package" kind="reel" label="Sports package graphics">
+              <x-img slug="st-fb-camera" alt="Student camera operator filming a Friday night football game" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="st-bn-guide" alt="Community Braves Network brand guide cover" sizes="(min-width: 900px) 28vw, 100vw">
+            </div>
+
+            <h3 class="slug">Mesquite ISD — Student Tech <span>2025–2026</span></h3>
+            <p>Came on for instructional tech. Got asked to pilot a student team that repairs student devices. Before the first year was out, the district created a position to take it district-wide.</p>
+
+            <h3 class="slug">The part that matters</h3>
+            <p>Several of those students walked into industry jobs straight out of high school. A few of them work for me.</p>
+
+            <h3 class="slug">How it works</h3>
+            <p>A facilitator who speaks both tech and instruction. A small group of students chosen for aptitude and attitude. An IT department that trusts them with real tickets. The result: devices back in class faster, and students leaving with work experience instead of a worksheet.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CHURCH -->
+    <section class="view" data-view="church" aria-label="Church">
+      <div class="split split-work">
+        <nav class="box overview" aria-label="Church projects">
+          <h2 class="box-title">Church</h2>
+          <a class="card" href="#/church/paradise" data-project="paradise">
+            <span class="card-title">Paradise Baptist</span>
+            <span class="card-line">Every Sunday ships.</span>
+          </a>
+          <a class="card" href="#/church/new-liberty" data-project="new-liberty">
+            <span class="card-title">New Liberty</span>
+            <span class="card-line">One look instead of five.</span>
+          </a>
+          <a class="card" href="#/church/events" data-project="events">
+            <span class="card-title">Church Events</span>
+            <span class="card-line">Camps and VBS. A new world every summer.</span>
+          </a>
+        </nav>
+
+        <div class="box detail">
+          <article class="project" data-project="paradise">
+            <h2 class="project-title">Paradise Baptist Church</h2>
+            <p class="spec">Media &amp; Technology Director · 2020–Present · X32 / Dante · ProPresenter 7 · Fiber</p>
+            <x-img slug="pbc-booth" alt="The Paradise Baptist media booth during a service" sizes="(min-width: 900px) 55vw, 100vw" class="wide">
+            <p>A church planted in 1904, with a tech setup that felt about that old. I rebuilt it: fiber internet, digital audio, ProPresenter running the cues for sound, video, and lights. Sunday stopped being a gamble.</p>
+            <p>Then the part that never stops — a new series every few weeks, title loops, announcements, and a brand to hold it all together. A small volunteer team runs it. I’m now designing the systems for a new building.</p>
+            <h3 class="slug">Series titles</h3>
+            <div class="grid-2">
+              <x-video slug="pbc-easter-24" kind="loop" label="Easter 2024 title loop">
+              <x-video slug="pbc-live-by-faith" kind="loop" label="Live by Faith title loop">
+              <x-video slug="pbc-his-mercy" kind="loop" label="His Mercy title loop">
+              <x-video slug="pbc-more-grace" kind="loop" label="More Grace title loop">
+              <x-img slug="pbc-to-be-continued" alt="To Be Continued sermon series title" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="pbc-new-beginnings" alt="New Beginnings sermon series title" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="pbc-grab-a-corner" alt="Grab a Corner sermon series title" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="pbc-membership" alt="Membership Matters sermon series title" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="pbc-palm-sunday" alt="What Will Your Story Be? Palm Sunday title" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="pbc-first-christmas" alt="#FirstChristmas series graphic" sizes="(min-width: 900px) 28vw, 100vw">
+            </div>
+            <h3 class="slug">Identity</h3>
+            <div class="grid-2">
+              <x-img slug="pbc-logo" alt="Paradise Baptist Church logo" sizes="(min-width: 900px) 28vw, 100vw">
+            </div>
+          </article>
+
+          <article class="project" data-project="new-liberty">
+            <h2 class="project-title">New Liberty Baptist Church</h2>
+            <p class="spec">Communications · Graphics · Media · Tech · 2008–2011, 2013–2020</p>
+            <x-img slug="nl-join-us" alt="New Liberty business card and Join Us invitation card" sizes="(min-width: 900px) 55vw, 100vw" class="wide">
+            <p>Where I started. Over about ten years I ran communications, graphics, media, and tech, part staff and part volunteer. The biggest job was getting everything to look like one church: logo, cards, signage, connection cards, even the cups. Plus the master plan presentation for a new campus.</p>
+            <div class="grid-2">
+              <x-img slug="nl-kids-wall" alt="NL Kids logo painted on a classroom wall" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="nl-cards" alt="Stack of New Liberty cards" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="nl-connect" alt="Welcome and connection cards" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="nl-next-step" alt="Take the Next Step response card" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="nl-cup" alt="Branded New Liberty cup" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="nl-master-plan" alt="Master plan presentation cover" sizes="(min-width: 900px) 28vw, 100vw">
+            </div>
+          </article>
+
+          <article class="project" data-project="events">
+            <h2 class="project-title">Church Events</h2>
+            <p class="spec">Identity · Illustration · Apparel · Print</p>
+            <x-img slug="ev-game-on" alt="Game On vacation Bible school logo, 2015" sizes="(min-width: 900px) 55vw, 100vw" class="wide">
+            <p>Every summer, a new event with its own name, its own look, and a few hundred kids wearing it. Logo, characters, shirts, signage, stage.</p>
+            <div class="grid-2">
+              <x-img slug="ev-trust" alt="Trust kids camp logo" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="ev-chosen" alt="Chosen camp logo, shirt and print" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="ev-treasure" alt="Treasure camp shirts and Captain Ron character" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="ev-camp-wannabe" alt="Camp Wannabe shirt and Ranger Sam character" sizes="(min-width: 900px) 28vw, 100vw">
+              <x-img slug="ev-faith" alt="Faith camp print, shirt and stage" sizes="(min-width: 900px) 28vw, 100vw">
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PERSONAL -->
+    <section class="view" data-view="personal" aria-label="Personal">
+      <div class="box gallery-box">
+        <div class="gallery-head">
+          <h2 class="box-title">Personal</h2>
+          <div class="chips" role="group" aria-label="Filter">
+            <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="chip" type="button" data-filter="illustration" aria-pressed="false">Illustration</button>
+            <button class="chip" type="button" data-filter="design" aria-pressed="false">Design</button>
+            <button class="chip" type="button" data-filter="woodwork" aria-pressed="false">Woodwork</button>
+          </div>
+        </div>
+
+        <ul class="gallery">
+          <li class="tile tile-feature" data-cat="woodwork">
+            <a href="{{full:p-lounge-chair}}" data-caption="Lounge Chair 103 — Designed it, drew it, built it. Base and upholstery outsourced." data-set="lounge-chair">
+              <x-img slug="p-lounge-chair" alt="Lounge Chair 103 spec sheet: photo, drawings and notes" sizes="(min-width: 900px) 45vw, 100vw">
+              <span class="tile-cap">Lounge Chair 103</span>
+            </a>
+          </li>
+          <li class="tile tile-top" data-cat="illustration">
+            <a href="{{full:p-baringer-405}}" data-caption="Baringer 405 — A 1970s muscle car ad for a car company that never existed.">
+              <x-img slug="p-baringer-405" alt="Vintage-style ad for the Baringer 405 muscle car" sizes="(min-width: 900px) 22vw, 50vw">
+              <span class="tile-cap">Baringer 405</span>
+            </a>
+          </li>
+          <li class="tile tile-series" data-cat="illustration">
+            <a href="{{full:ff-2025-vampire}}" data-caption="Fright Fall — RetroSupply’s October challenge. I’ve done it every year since 2022." data-set="fright-fall">
+              <x-img slug="ff-2025-vampire" alt="Vampire silhouette, Fright Fall 2025" sizes="(min-width: 900px) 22vw, 50vw">
+              <span class="tile-cap">Fright Fall <span class="tile-count">6</span></span>
+            </a>
+          </li>
+          <li class="tile" data-cat="illustration">
+            <a href="{{full:p-wolfman}}" data-caption="Wolf Man — Ballpoint pen, colored digitally.">
+              <x-img slug="p-wolfman" alt="Wolf Man in ballpoint pen with digital color" sizes="(min-width: 900px) 22vw, 50vw">
+              <span class="tile-cap">Wolf Man</span>
+            </a>
+          </li>
+          <li class="tile" data-cat="illustration">
+            <a href="{{full:p-santa}}" data-caption="Santa, 2024">
+              <x-img slug="p-santa" alt="Santa with a sack of gifts and a mug" sizes="(min-width: 900px) 22vw, 50vw">
+              <span class="tile-cap">Santa</span>
+            </a>
+          </li>
+          <li class="tile tile-wide" data-cat="design">
+            <a href="{{full:p-galahad}}" data-caption="Galahad — Logo.">
+              <x-img slug="p-galahad" alt="Galahad logo in red and white" sizes="(min-width: 900px) 45vw, 100vw">
+              <span class="tile-cap">Galahad</span>
+            </a>
+          </li>
+          <li class="tile tile-wide" data-cat="design">
+            <a href="{{full:p-moses}}" data-caption="Moses — An ’80s-style logo.">
+              <x-img slug="p-moses" alt="Moses logo in 1980s style" sizes="(min-width: 900px) 45vw, 100vw">
+              <span class="tile-cap">Moses</span>
+            </a>
+          </li>
+          <li class="tile" data-cat="design">
+            <a href="{{full:p-77-tee}}" data-caption="’77 — T-shirt design.">
+              <x-img slug="p-77-tee" alt="Model wearing the ’77 t-shirt" sizes="(min-width: 900px) 22vw, 50vw">
+              <span class="tile-cap">’77</span>
+            </a>
+          </li>
+          <li class="tile" data-cat="illustration">
+            <a href="{{full:p-eggshell}}" data-caption="EggShell — Digital paint.">
+              <x-img slug="p-eggshell" alt="Digital painting of a woman in profile" sizes="(min-width: 900px) 22vw, 50vw">
+              <span class="tile-cap">EggShell</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Sets: extra images opened from a tile with data-set -->
+        <ul class="set" data-set="lounge-chair" hidden>
+          <li><a href="{{full:p-lounge-chair}}" data-caption="Lounge Chair 103 — spec sheet">Spec sheet</a></li>
+          <li><a href="{{full:p-lounge-chair-sides}}" data-caption="Lounge Chair 103 — finished chair and side drawing">Sides</a></li>
+        </ul>
+        <ul class="set" data-set="fright-fall" hidden>
+          <li><a href="{{full:ff-2022-tombstone}}" data-caption="Fright Fall 2022 — Tombstone">Tombstone, 2022</a></li>
+          <li><a href="{{full:ff-2023-howl}}" data-caption="Fright Fall 2023 — Howl">Howl, 2023</a></li>
+          <li><a href="{{full:ff-2023-mask}}" data-caption="Fright Fall 2023 — Mask">Mask, 2023</a></li>
+          <li><a href="{{full:ff-2024-gargoyle}}" data-caption="Fright Fall 2024 — Gargoyle">Gargoyle, 2024</a></li>
+          <li><a href="{{full:ff-2025-vampire}}" data-caption="Fright Fall 2025 — Vampire">Vampire, 2025</a></li>
+          <li><a href="{{full:ff-2026-haunted-tape}}" data-caption="Fright Fall 2026 — Haunted Tape">Haunted Tape, 2026</a></li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <span>© 2026 Blake Tilton</span>
+  <button class="link" type="button" data-open-contact>Contact</button>
+</footer>
+
+<!-- ============================== CONTACT -->
+<dialog class="modal" id="contact" aria-labelledby="contact-title">
+  <form class="contact-form" id="contact-form" action="https://script.google.com/macros/s/AKfycbwOA21dJPIOG0s6iKracbP59ZHoUGCj8DaKt1FcleJf37RupASmgxOF7at5SZmMlnbPtA/exec" method="post">
+    <div class="modal-head">
+      <h2 class="box-title" id="contact-title">Contact</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close">×</button>
+    </div>
+    <label class="field"><span>Name</span><input name="name" required maxlength="200" autocomplete="name"></label>
+    <label class="field"><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+    <label class="field"><span>Message</span><textarea name="message" required maxlength="5000" rows="6"></textarea></label>
+    <label class="trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="modal-actions">
+      <p class="form-status" role="status" aria-live="polite"></p>
+      <button class="btn" type="submit">Send</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ============================== LIGHTBOX -->
+<dialog class="lightbox" id="lightbox" aria-label="Image viewer">
+  <div class="lb-frame">
+    <img class="lb-img" alt="">
+    <div class="lb-bar">
+      <p class="lb-cap"></p>
+      <div class="lb-nav">
+        <button class="icon-btn" type="button" data-lb="prev" aria-label="Previous">←</button>
+        <span class="lb-count"></span>
+        <button class="icon-btn" type="button" data-lb="next" aria-label="Next">→</button>
+        <button class="icon-btn" type="button" data-close aria-label="Close">×</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>
