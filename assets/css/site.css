@@ -206,6 +206,7 @@ button, input, textarea { font: inherit; color: inherit; }
   letter-spacing: 0.1em;
   color: var(--dim);
 }
+.spec { text-wrap: balance; }   /* no single-segment widows */
 .spec span { white-space: nowrap; }
 .project p { max-width: 40em; }
 .project > p + p { margin-top: 1rem; }

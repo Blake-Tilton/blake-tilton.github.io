@@ -17,7 +17,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 Image.MAX_IMAGE_PIXELS = None
 
@@ -119,8 +119,8 @@ def main():
     for slug, (src, widths) in IMAGES.items():
         if only and slug != only:
             continue
-        with open_source(WORK / src) as im:
-            im.load()
+        with open_source(WORK / src) as src_im:
+            im = ImageOps.exif_transpose(src_im)  # phone photos store rotation in EXIF
             manifest[slug] = write_webp(im, slug, widths)
         print("img ", slug, manifest[slug]["sizes"])
 
