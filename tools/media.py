@@ -52,7 +52,8 @@ IMAGES = {
 
     "p-lounge-chair":       ("Personal/Woodwork/103 Lounge Chair.png", GALLERY),
     "p-lounge-chair-sides": ("Furniture/Lounge Chair sides.png", GALLERY),
-    "p-baringer-405":       ("Personal/Illustration/Baringer 405 - 1970s Car Illustration.png", GALLERY),
+    "p-baringer-405":       ("Personal/Illustration/Baringer/Baringer 405 - 1970s Car Illustration.png", GALLERY),
+    "p-baringer-50":        ("Personal/Illustration/Baringer/Baringer 5.0 Car illustration.png", GALLERY),
     "p-wolfman":            ("Personal/Illustration/WolfMan - Ballpoint Pen with Digital Color.png", GALLERY),
     "p-santa":              ("Personal/Illustration/Santa - 2024.png", GALLERY),
     "p-eggshell":           ("Personal/Illustration/EggShell - Digital Paint.png", GALLERY),
