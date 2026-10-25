@@ -300,18 +300,18 @@
   ],
   "w": 4032
  },
- "st-showcase-2023": {
+ "st-sports-package": {
   "h": 1080,
-  "mb": 50.0,
+  "mb": 3.4,
   "sizes": [
    800,
    1600
   ],
   "w": 1920
  },
- "st-sports-package": {
+ "st-summerstv": {
   "h": 1080,
-  "mb": 3.4,
+  "mb": 42.5,
   "sizes": [
    800,
    1600

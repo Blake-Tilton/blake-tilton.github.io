@@ -71,7 +71,7 @@ IMAGES = {
 # slug: (source, max width, video kbps, keep audio, poster at seconds)
 VIDEOS = {
     "st-av-reel-2425":    ("School/2425 AV Reel.mp4", 1920, 3500, True, 6),
-    "st-showcase-2023":   ("School/ShowCase AV Student Work 23.mp4", 1920, 3500, True, 6),
+    "st-summerstv":       ("School/SummersTV.mp4", 1920, 3500, True, 6),
     "st-bn-sting":        ("School/BN Sting Yellow.mov", 1920, 3000, True, 4),
     "st-sports-package":  ("School/Sports Package.mp4", 1920, 3000, True, 10),
     "pbc-easter-24":      ("Sermon Series/Easter 24 Title Loop.mp4", 1280, 1800, False, 2),
